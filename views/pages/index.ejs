@@ -25,6 +25,7 @@
                   </div>
                   <h5 class="card-text fs-5"><%= obj.title %></h5>
                   <p class="card-text h5">Precio: <%= obj.price %> U$S <img width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='Tether'/> / <img width="20" height="20" src=/assets/img/logos/usdclogo.svg alt='USD Coin'/></p>
+                  <span><%= obj.stock %> Disponibles</span>
                   <a href="/api/productos/<%= obj.id %>"><button class="btn-view">Ver</button></a>
                   <button class="mb-1 py-1 rounded-0 btn btn-danger font-weight-bold text-white">X</button>
                 </div>

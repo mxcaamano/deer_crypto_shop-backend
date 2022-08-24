@@ -2,9 +2,11 @@ const express = require('express');
 const { Router } = express;
 const Contenedor = require("./contenedor");
 const contenedor = new Contenedor('./productos.txt');
+const contenedorCarritos = new Contenedor('./carritos.txt');
 const formatDate = require("./formatDate");
 const app = express();
 const routerProductos = Router();
+const routerCarritos = Router();
 
 const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, ()=>{
@@ -16,9 +18,11 @@ app.set('views', './views')
 
 app.use(express.static('public'));
 
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 app.use('/api/productos', routerProductos);
-routerProductos.use(express.json());
-routerProductos.use(express.urlencoded({extended: false}));
+app.use('/api/carritos', routerCarritos);
 
 // Endpoints routerProductos
 routerProductos.get('/', async(req, res) => {
@@ -60,4 +64,39 @@ routerProductos.delete('/:id', async(req, res) => {
 })
 
 // Endpoints routerCarrito
+
+routerCarritos.post('/', async (req, res) => {
+    const carrito = {timestamp: Date.now(), productos: []}
+    res.json(await contenedorCarritos.save(carrito))
+})
+
+routerCarritos.delete('/:id', async(req, res) => {
+    await contenedorCarritos.deleteById(parseInt(req.params.id))
+})
+
+routerCarritos.get('/:id/productos', async (req, res) => {
+    const id = parseInt(req.params.id)
+    const carrito = await contenedorCarritos.getById(id)
+    res.json(carrito.productos)
+})
+
+routerCarritos.post('/:id/productos', async (req, res) => {
+    const id = parseInt(req.params.id)
+    const { id_prod } = req.body
+    const carrito = await contenedorCarritos.getById(id)
+    const producto = await contenedor.getById(id_prod)
+    producto.id = carrito.productos.length + 1
+    carrito.productos.push(producto)
+    res.json(await contenedorCarritos.updateById({timestamp: carrito.timestamp, productos: carrito.productos, id: parseInt(id)}))
+})
+
+routerCarritos.delete('/:id/productos/:id_prod', async (req, res) => {
+    const id = parseInt(req.params.id)
+    const id_prod = parseInt(req.params.id_prod)
+    const carrito = await contenedorCarritos.getById(id)
+    const productosArr = carrito.productos.filter(p => p.id !== id_prod)
+    console.log(productosArr)
+    res.json(await contenedorCarritos.updateById({timestamp: carrito.timestamp, productos: productosArr, id: parseInt(id)}))
+})
+
 
