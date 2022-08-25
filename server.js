@@ -3,7 +3,6 @@ const { Router } = express;
 const Contenedor = require("./contenedor");
 const contenedor = new Contenedor('./productos.txt');
 const contenedorCarritos = new Contenedor('./carritos.txt');
-const formatDate = require("./formatDate");
 const app = express();
 const routerProductos = Router();
 const routerCarritos = Router();
@@ -72,7 +71,7 @@ routerProductos.put('/:id', async (req, res) => {
     if(isAdmin){
     const { id } = req.params
     const { title, price, description, thumbnail, code, stock  } = req.body
-    title && price && !isNaN(price) && description && thumbnail && code && stock
+    title && price && !isNaN(price) && description && thumbnail && code && stock && !isNaN(stock)
     ? res.json(await contenedor.updateById({title, price, description, thumbnail, code, stock, id: parseInt(id), timestamp: Date.now()}))
     : res.status(400).json({ error: 'Se requiere titulo, precio(debe ser numero), descripción, url de imagen, codigo y stock(debe ser numero)' });
     }
@@ -83,8 +82,10 @@ routerProductos.put('/:id', async (req, res) => {
 
 routerProductos.delete('/:id', async(req, res) => {
     if(isAdmin){
-    await contenedor.deleteById(parseInt(req.params.id)) 
-    ? res.status(200).json({ message: 'Producto eliminado' })
+    const id = parseInt(req.params.id)
+    await contenedor.getById(id)
+    ? (await contenedor.deleteById(id),
+    res.status(200).json({ message: 'Producto eliminado' }))     
     : res.status(400).json({ message: 'El producto no existe' })
     }
     else{
@@ -96,11 +97,16 @@ routerProductos.delete('/:id', async(req, res) => {
 
 routerCarritos.post('/', async (req, res) => {
     const carrito = {productos: []}
+    res.status(200).json({ message: 'Carrito creado' })
     res.json(await contenedorCarritos.save(carrito))
 })
 
 routerCarritos.delete('/:id', async(req, res) => {
-    await contenedorCarritos.deleteById(parseInt(req.params.id))
+    const id = parseInt(req.params.id)
+    await contenedorCarritos.getById(id)
+    ? (await contenedorCarritos.deleteById(id), 
+    res.status(200).json({ message: 'Carrito eliminado' }))
+    : res.status(400).json({ message: 'El carrito no existe' })
 })
 
 routerCarritos.get('/:id/productos', async (req, res) => {
@@ -114,18 +120,39 @@ routerCarritos.post('/:id/productos', async (req, res) => {
     const { id_prod } = req.body
     const carrito = await contenedorCarritos.getById(id)
     const producto = await contenedor.getById(id_prod)
-    producto.id = carrito.productos.length + 1
-    carrito.productos.push(producto)
-    res.json(await contenedorCarritos.updateById({timestamp: carrito.timestamp, productos: carrito.productos, id: parseInt(id)}))
+    producto 
+    ? (producto.id = carrito.productos.length + 1, 
+    carrito.productos.push(producto),
+    res.status(200).json({ message: 'Producto añadido al carrito' }),
+    res.json(await contenedorCarritos.updateById({timestamp: carrito.timestamp, productos: carrito.productos, id: parseInt(id)})))
+    : res.status(400).json({ message: 'El producto no existe' }) 
 })
 
 routerCarritos.delete('/:id/productos/:id_prod', async (req, res) => {
     const id = parseInt(req.params.id)
     const id_prod = parseInt(req.params.id_prod)
     const carrito = await contenedorCarritos.getById(id)
-    const productosArr = carrito.productos.filter(p => p.id !== id_prod)
-    console.log(productosArr)
+    const producto = carrito.productos.find(p => p.id == id_prod)
+    if(producto){
+    const productosArr = carrito.productos.filter(p => p !== producto)
+    res.status(200).json({ message: 'Producto eliminado del carrito' })
     res.json(await contenedorCarritos.updateById({timestamp: carrito.timestamp, productos: productosArr, id: parseInt(id)}))
+    }
+    else{
+        res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
+    }
 })
 
-
+// Error para rutas no validas
+app.use(function(req, res) {
+          res.json({
+            error: {
+              'name':'error',
+              'status':404,
+              'message':'Invalid Request',
+              'statusCode':404,
+              'stack':'http://localhost:8080/'
+            },
+             message: 'La ruta no existe'
+          });
+    });

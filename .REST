@@ -38,7 +38,7 @@
 # POST http://localhost:8080/api/carritos HTTP/1.1
 # content-type: application/json
 
-# DELETE http://localhost:8080/api/carritos/4 HTTP/1.1
+# DELETE http://localhost:8080/api/carritos/5 HTTP/1.1
 # content-type: application/json
 
 # GET http://localhost:8080/api/carritos/2/productos HTTP/1.1
@@ -48,8 +48,13 @@
 # content-type: application/json
 
 # {
-#     "id_prod": 2
+#     "id_prod": 3
 # }
 
-# DELETE http://localhost:8080/api/carritos/2/productos/1 HTTP/1.1
+# DELETE http://localhost:8080/api/carritos/4/productos/2 HTTP/1.1
+# content-type: application/json
+
+# EJEMPLO DE ERROR EN RUTA NO VALIDA
+
+# GET http://localhost:8080/api/usuarios HTTP/1.1
 # content-type: application/json

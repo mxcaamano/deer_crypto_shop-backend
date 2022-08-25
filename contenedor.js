@@ -53,10 +53,10 @@ class Contenedor {
             if(objIndex !== -1){
                 data[objIndex] = obj
                 await fs.writeFile(this.ruta, JSON.stringify(data, null, 2)) 
-                return {mensaje: 'Objeto actualizado' }
+                console.log('Objeto actualizado')
             }
             else {
-                return {error: 'No existe el objeto'}
+                console.log("No existe el objeto")
             }
         } catch (error) {
             console.log(error)            

@@ -64,8 +64,23 @@
         "stock": 40,
         "id": 1,
         "timestamp": 1661391123677
+      },
+      {
+        "title": "Placa de video xxxxxxxxxx",
+        "price": 272,
+        "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
+        "thumbnail": "https://imagen.com/dlfjeuu22.webp",
+        "code": "72727272",
+        "stock": 55,
+        "id": 2,
+        "timestamp": 1661395249211
       }
     ],
     "id": 4
+  },
+  {
+    "productos": [],
+    "id": 5,
+    "timestamp": 1661457569833
   }
 ]
