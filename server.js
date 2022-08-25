@@ -24,49 +24,78 @@ app.use(express.urlencoded({extended: false}));
 app.use('/api/productos', routerProductos);
 app.use('/api/carritos', routerCarritos);
 
+// Variable de Permisos de Administrador
+const isAdmin = true
+
 // Endpoints routerProductos
 routerProductos.get('/', async(req, res) => {
     const productos = await contenedor.getAll();
-    let state = null
-    productos ? state = true : state = false
-    res.render('pages/index', {listExist: state, list: productos} );
+    productos 
+    ? res.json(productos)
+    : res.status(400).json({ error: 'No se encuentran productos' });
+    // Lineas para implementar con el render
+    // let state = null
+    // productos ? state = true : state = false
+    // res.render('pages/index', {listExist: state, list: productos} );
 })
 
-routerProductos.get('/add', async(req, res) => {
-    res.render('pages/form');
-})
+// Endpoint para implementar con render
+// routerProductos.get('/add', async(req, res) => {
+//     res.render('pages/form');
+// })
 
 routerProductos.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const producto = await contenedor.getById(id)
     producto 
-    ? res.render('pages/product', {producto: producto}) 
+    ? res.json(producto) 
     : res.status(400).json({ error: 'No se encuentra el producto' });
+    // Lineas para implementar con el render
+    // producto 
+    // ? res.render('pages/product', {producto: producto}) 
+    // : res.status(400).json({ error: 'No se encuentra el producto' });
 })
 
 routerProductos.post('/', async (req, res) => {
-    const producto = req.body;
-    producto.title && producto.price && producto.thumbnail && !isNaN(producto.price)
-    ? (producto.price = parseFloat(producto.price), res.json(await contenedor.save(producto)))
-    : res.status(400).json({ error: 'Se requiere titulo, precio y url de imagen' });
+    if(isAdmin){
+        const producto = req.body;
+        producto.title && producto.price && !isNaN(producto.price) && producto.description && producto.thumbnail && producto.code && producto.stock && !isNaN(producto.stock)
+        ? (producto.price = parseFloat(producto.price), res.json(await contenedor.save(producto)))
+        : res.status(400).json({ error: 'Se requiere titulo, precio(debe ser numero), descripción, url de imagen, codigo y stock(debe ser numero)' });
+    }
+    else{
+        res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
+    }
 })
 
 routerProductos.put('/:id', async (req, res) => {
+    if(isAdmin){
     const { id } = req.params
-    const { title, price, thumbnail } = req.body
-    title && price && thumbnail && !isNaN(price)
-    ? res.json(await contenedor.updateById({title, price, thumbnail, id: parseInt(id)}))
-    : res.status(400).json({ error: 'Se requiere titulo, precio y url de imagen' });
+    const { title, price, description, thumbnail, code, stock  } = req.body
+    title && price && !isNaN(price) && description && thumbnail && code && stock
+    ? res.json(await contenedor.updateById({title, price, description, thumbnail, code, stock, id: parseInt(id), timestamp: Date.now()}))
+    : res.status(400).json({ error: 'Se requiere titulo, precio(debe ser numero), descripción, url de imagen, codigo y stock(debe ser numero)' });
+    }
+    else{
+        res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
+    }
 })
 
 routerProductos.delete('/:id', async(req, res) => {
-    await contenedor.deleteById(parseInt(req.params.id))
+    if(isAdmin){
+    await contenedor.deleteById(parseInt(req.params.id)) 
+    ? res.status(200).json({ message: 'Producto eliminado' })
+    : res.status(400).json({ message: 'El producto no existe' })
+    }
+    else{
+        res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
+    }
 })
 
 // Endpoints routerCarrito
 
 routerCarritos.post('/', async (req, res) => {
-    const carrito = {timestamp: Date.now(), productos: []}
+    const carrito = {productos: []}
     res.json(await contenedorCarritos.save(carrito))
 })
 

@@ -1,11 +1,10 @@
 [
   {
-    "timestamp": 1661312254211,
     "productos": [],
-    "id": 1
+    "id": 1,
+    "timestamp": 1661312254211
   },
   {
-    "timestamp": 1661312255320,
     "productos": [
       {
         "title": "Motherboard Para Mineria Z590 Btc Duo 12 Gpu Placas Pcreg",
@@ -35,10 +34,10 @@
         "id": 3
       }
     ],
-    "id": 2
+    "id": 2,
+    "timestamp": 1661312255320
   },
   {
-    "timestamp": 1661312255688,
     "productos": [
       {
         "title": "Placa de video AMD ASRock Challenger Radeon RX 6700 Series RX 6700 XT RX6700XT CLD 12GO OC Edition 12GB",
@@ -50,11 +49,23 @@
         "id": 1
       }
     ],
-    "id": 3
+    "id": 3,
+    "timestamp": 1661312255688
   },
   {
     "timestamp": 1661312260776,
-    "productos": [],
+    "productos": [
+      {
+        "title": "Placa de video Nvidia Evga XC Gaming GeForce RTX 30 Series RTX 3060 12G-P5-3657-KR 12GB",
+        "price": 485,
+        "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
+        "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_962222-MLA46231520852_062021-F.webp",
+        "code": "1434550011",
+        "stock": 40,
+        "id": 1,
+        "timestamp": 1661391123677
+      }
+    ],
     "id": 4
   }
 ]

@@ -16,8 +16,8 @@ class Contenedor {
             let data = await fs.readFile(this.ruta, 'utf8');
             let dataParse = JSON.parse(data);
             dataParse.length 
-            ? await fs.writeFile(this.ruta, JSON.stringify([...dataParse, { ...obj, id: dataParse[dataParse.length - 1].id + 1 }], null, 2)) 
-            : await fs.writeFile(this.ruta, JSON.stringify([{...obj, id: 1}], null, 2));
+            ? await fs.writeFile(this.ruta, JSON.stringify([...dataParse, { ...obj, id: dataParse[dataParse.length - 1].id + 1, timestamp: Date.now() }], null, 2)) 
+            : await fs.writeFile(this.ruta, JSON.stringify([{...obj, id: 1, timestamp: Date.now()}], null, 2));
             console.log(`El Objeto tiene el ID: ${dataParse.length + 1}`);
         } catch (error) {
             console.log(error)            
