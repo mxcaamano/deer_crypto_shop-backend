@@ -1,4 +1,3 @@
-// import { ContenedorArchivo } from "../ContenedorArchivo";
 const { ContenedorArchivo } = require('../../containers/ContenedorArchivo')
 
 class CarritosDaoArchivo extends ContenedorArchivo{
@@ -7,5 +6,4 @@ class CarritosDaoArchivo extends ContenedorArchivo{
     }
 }
 
-// export default CarritosDaoArchivo
 module.exports = CarritosDaoArchivo

@@ -1,9 +1,6 @@
 const { response } = require('express')
 
-// const { Contenedor } = require('../contenedor')
-// const contenedor = new Contenedor('./carts.txt')
-// const contenedorProducts = new Contenedor('./products.txt')
-
+//DAO Archivo
 const CarritosDaoArchivo = require('../daos/carritos/CarritosDaoArchivo')
 const contenedor = new CarritosDaoArchivo()
 const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')

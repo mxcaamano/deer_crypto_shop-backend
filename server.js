@@ -28,13 +28,13 @@ app.use('/api/carritos', routerCarts);
 
 // router.get('/', async (req, res) => {
 //   let producto = new Products({
-//     title: "Placa de video AMD ASRock Challenger Radeon RX 6700 Series RX 6700 XT RX6700XT CLD 12GO OC Edition 12GB",
-//     price: 482,
-//     description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
-//     thumbnail: "https://http2.mlstatic.com/D_NQ_NP_2X_925228-MLA49727654203_042022-F.webp",
-//     code: "34820172",
-//     stock: 25,
-//     timestamp: 1661391123830
+    // title: "Placa de video AMD ASRock Challenger Radeon RX 6700 Series RX 6700 XT RX6700XT CLD 12GO OC Edition 12GB",
+    // price: 482,
+    // description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
+    // thumbnail: "https://http2.mlstatic.com/D_NQ_NP_2X_925228-MLA49727654203_042022-F.webp",
+    // code: "34820172",
+    // stock: 25,
+    // timestamp: 1661391123830
 //   })
 //   await producto.save()
 //   res.send('Hello World')
