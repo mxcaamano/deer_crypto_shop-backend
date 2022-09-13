@@ -1,7 +1,10 @@
 const { response } = require('express')
 
-const { Contenedor } = require('../contenedor')
-const contenedor = new Contenedor('./products.txt')
+// const { Contenedor } = require('../contenedor')
+// const contenedor = new Contenedor('./products.txt')
+
+const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')
+const contenedor = new ProductosDaoArchivo()
 
 // Variable de Permisos de Administrador
 const isAdmin = true
