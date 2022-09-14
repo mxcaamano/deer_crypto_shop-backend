@@ -3,28 +3,27 @@
 # GET http://localhost:8080/api/productos/ HTTP/1.1
 # content-type: application/json
 
-# GET http://localhost:8080/api/productos/631e7af8af42355915865f2b HTTP/1.1
+# GET http://localhost:8080/api/productos/63211f9c5aa8069a1ffe224f HTTP/1.1
 # content-type: application/json
 
 # POST http://localhost:8080/api/productos/ HTTP/1.1
 # content-type: application/json
 
 # {
-#     "title": "UNA MAS Y VEMOSS",
-#     "price": 482,
+#     "title": "otro Articulo sin timestamp",
+#     "price": 91,
 #     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
 #     "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_925228-MLA49727654203_042022-F.webp",
 #     "code": "34820172",
-#     "stock": 25,
-#     "timestamp": 1661391123830
+#     "stock": 115
 # }
 
-# PUT http://localhost:8080/api/productos/631e798fdea41c2ab1350e3f HTTP/1.1
+# PUT http://localhost:8080/api/productos/631ff567931c4dcc9cb6fc9c HTTP/1.1
 # content-type: application/json
 
 # {
-#     "title": "Placa de video xxxxxxxxxx",
-#     "price": 272,
+#     "title": "modificando de nuevo",
+#     "price": 1112,
 #     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
 #     "thumbnail": "https://imagen.com/dlfjeuu22.webp",
 #     "code": "72727272",
@@ -32,7 +31,7 @@
 #     "timestamp": 1661391123830
 # }
 
-# DELETE http://localhost:8080/api/productos/631ff00c06068d13cf040038 HTTP/1.1
+# DELETE http://localhost:8080/api/productos/63211f9c5aa8069a1ffe224f HTTP/1.1
 # content-type: application/json
 
 # DELETE http://localhost:8080/api/productos/ HTTP/1.1
@@ -43,20 +42,20 @@
 # POST http://localhost:8080/api/carritos HTTP/1.1
 # content-type: application/json
 
-# DELETE http://localhost:8080/api/carritos/5 HTTP/1.1
+# DELETE http://localhost:8080/api/carritos/632125cfb64ed65d59987289 HTTP/1.1
 # content-type: application/json
 
-# GET http://localhost:8080/api/carritos/2/productos HTTP/1.1
+# GET http://localhost:8080/api/carritos/632125cfb64ed65d59987289/productos HTTP/1.1
 # content-type: application/json
 
-# PUT http://localhost:8080/api/carritos/6/productos HTTP/1.1
+# PUT http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos HTTP/1.1
 # content-type: application/json
 
 # {
-#     "id_prod": 3
+#     "id_prod": "63215268ca1bc09b94859ace"
 # }
 
-# DELETE http://localhost:8080/api/carritos/4/productos/2 HTTP/1.1
+# DELETE http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos/631ff574931c4dcc9cb6fca0 HTTP/1.1
 # content-type: application/json
 
 # EJEMPLO DE ERROR EN RUTA NO VALIDA

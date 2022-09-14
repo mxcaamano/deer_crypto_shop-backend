@@ -1,21 +1,23 @@
+const mongoose = require('mongoose')
+
 class ContenedorMongoDb {
-    constructor(ruta){
-        this.ruta = ruta
+    constructor(collName, schema){
+        this.coll = mongoose.model(collName, schema)
     }
 
-    async save(coll, obj){
+    async save(obj){
         try {
-            const saved = await new coll(obj).save()
-            console.log(saved);
+            const created = await this.coll.create(obj)
+            return created;
         } catch (error) {
             console.log(error)            
         }
         
     }
 
-    async getById(coll, id){
+    async getById(id){
         try {
-            const found = await coll.find({_id: id})
+            const found = await this.coll.findOne({_id: id}, {__v: 0});
             return found
             ? (console.log(found), found)
             : console.log("No se encuentra el objeto")
@@ -25,18 +27,18 @@ class ContenedorMongoDb {
         }
     }
 
-    async updateById(coll, id, props){
+    async updateById(id, props){
         try {
-            const updated = await coll.updateOne({_id: id}, { $set: props })
+            const updated = await this.coll.updateOne({_id: id}, { $set: props })
             console.log(updated)
         } catch (error) {
             console.log(error)            
         }
     }
 
-    async getAll(coll){
+    async getAll(){
         try {
-            const found = await coll.find();
+            const found = await this.coll.find();
             return found.length 
             ? (console.log(found), found)
             : console.log("No hay objetos")
@@ -46,9 +48,10 @@ class ContenedorMongoDb {
         }
     }
 
-    async deleteById(coll, id){
+    async deleteById(id){
         try {
-            const deleted = await coll.deleteOne({_id: id})
+            const deleted = await this.coll.deleteOne({_id: id})
+            console.log(deleted)
             if (deleted.deletedCount > 0){
                 console.log(deleted)
                 console.log('Objeto eliminado');
@@ -64,9 +67,9 @@ class ContenedorMongoDb {
         }
     }
 
-    async deleteAll(coll){
+    async deleteAll(){
         try {
-            const deleted = await coll.deleteMany()
+            const deleted = await this.coll.deleteMany()
             deleted.deletedCount 
             ? console.log(`${deleted.deletedCount} objetos eliminados`) 
             : console.log("No hay objetos para eliminar.")    
