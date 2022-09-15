@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const connectDB = async () => {
+const connectMongo = async () => {
     try {
         const url = 'mongodb+srv://admin:admin@cluster0.dbaqnvv.mongodb.net/ecommerce?retryWrites=true&w=majority'
         await mongoose.connect(url,{
@@ -13,4 +13,4 @@ const connectDB = async () => {
     }
 }
 
-module.exports = connectDB
+module.exports = connectMongo

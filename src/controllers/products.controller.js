@@ -6,8 +6,12 @@ const { response } = require('express')
 // const containerProds = new ProductosDaoArchivo()
 
 //DAO MongoDB
-const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
-const containerProds = new ProductosDaoMongoDb()
+// const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
+// const containerProds = new ProductosDaoMongoDb()
+
+//DAO Firebase
+const ProductosDaoFirebase = require('../daos/productos/ProductosDaoFirebase')
+const containerProds = new ProductosDaoFirebase()
 
 // Variable de Permisos de Administrador
 const isAdmin = true
@@ -70,7 +74,7 @@ const deleteAllProducts = async (req, res = response) => {
     if(isAdmin){
     const products = await containerProds.deleteAll();
     products 
-    ? res.status(200).json({ message: 'Producto eliminado' })
+    ? res.status(200).json({ message: 'Productos eliminados' })
     : res.status(400).json({ error: 'No se encuentran productos' })}
     else{
         res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });

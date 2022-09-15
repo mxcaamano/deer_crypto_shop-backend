@@ -3,35 +3,34 @@
 # GET http://localhost:8080/api/productos/ HTTP/1.1
 # content-type: application/json
 
-# GET http://localhost:8080/api/productos/63211f9c5aa8069a1ffe224f HTTP/1.1
+# GET http://localhost:8080/api/productos/qjVMTnSh7ZrucScI5OsL HTTP/1.1
 # content-type: application/json
 
 # POST http://localhost:8080/api/productos/ HTTP/1.1
 # content-type: application/json
 
 # {
-#     "title": "otro Articulo sin timestamp",
-#     "price": 91,
+#     "title": "articulo ++++",
+#     "price": 212,
 #     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
 #     "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_925228-MLA49727654203_042022-F.webp",
-#     "code": "34820172",
-#     "stock": 115
+#     "code": "3dfgfgd",
+#     "stock": 44
 # }
 
-# PUT http://localhost:8080/api/productos/631ff567931c4dcc9cb6fc9c HTTP/1.1
+# PUT http://localhost:8080/api/productos/W808ciruSiwo85LPLI34 HTTP/1.1
 # content-type: application/json
 
 # {
-#     "title": "modificando de nuevo",
+#     "title": "modificado en firebase",
 #     "price": 1112,
 #     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
 #     "thumbnail": "https://imagen.com/dlfjeuu22.webp",
 #     "code": "72727272",
-#     "stock": 55,
-#     "timestamp": 1661391123830
+#     "stock": 55
 # }
 
-# DELETE http://localhost:8080/api/productos/63211f9c5aa8069a1ffe224f HTTP/1.1
+# DELETE http://localhost:8080/api/productos/Z1EaCoAxrT2Yccoqs2xJ HTTP/1.1
 # content-type: application/json
 
 # DELETE http://localhost:8080/api/productos/ HTTP/1.1
@@ -42,17 +41,17 @@
 # POST http://localhost:8080/api/carritos HTTP/1.1
 # content-type: application/json
 
-# DELETE http://localhost:8080/api/carritos/632125cfb64ed65d59987289 HTTP/1.1
+# DELETE http://localhost:8080/api/carritos/6321021496b27dcf410c99d4 HTTP/1.1
 # content-type: application/json
 
-# GET http://localhost:8080/api/carritos/632125cfb64ed65d59987289/productos HTTP/1.1
+# GET http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos HTTP/1.1
 # content-type: application/json
 
-# PUT http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos HTTP/1.1
+# PUT http://localhost:8080/api/carritos/5BrlrsrWZlVENp3qSGJD/productos HTTP/1.1
 # content-type: application/json
 
 # {
-#     "id_prod": "63215268ca1bc09b94859ace"
+#     "id_prod": "IGvCpk8E8SlZxVktXGRi"
 # }
 
 # DELETE http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos/631ff574931c4dcc9cb6fca0 HTTP/1.1

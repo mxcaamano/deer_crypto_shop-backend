@@ -6,10 +6,15 @@ const { response } = require('express')
 // const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')
 // const containerProds = new ProductosDaoArchivo()
 
-//DAO MongoDB
+// DAO MongoDB
 const CarritosDaoMongoDb = require('../daos/carritos/CarritosDaoMongoDb')
 const containerCarts = new CarritosDaoMongoDb()
 const { containerProds } = require('../controllers/products.controller')
+
+//DAO Firebase
+// const CarritosDaoFirebase = require('../daos/carritos/CarritosDaoFirebase')
+// const containerCarts = new CarritosDaoFirebase()
+// const { containerProds } = require('../controllers/products.controller')
 
 // Variable de Permisos de Administrador
 const isAdmin = true
@@ -25,7 +30,7 @@ const createCart = async (req, res= response) => {
 const deleteCart = async (req, res= response) => {
     const id = req.params.id
     const found = await containerCarts.getById(id)
-    found.length
+    found
     ? (await containerCarts.deleteById(id), 
     res.status(200).json({ message: 'Carrito eliminado' }))
     : res.status(400).json({ message: 'El carrito no existe' })

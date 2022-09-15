@@ -51,13 +51,10 @@ class ContenedorMongoDb {
     async deleteById(id){
         try {
             const deleted = await this.coll.deleteOne({_id: id})
-            console.log(deleted)
             if (deleted.deletedCount > 0){
-                console.log(deleted)
                 console.log('Objeto eliminado');
             }
             else{
-                console.log(deleted)
                 console.log("No existe el objeto");
             }
             
