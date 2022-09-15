@@ -3,16 +3,10 @@ const app = express();
 const routerProducts = require('./src/routes/products.route');
 const routerCarts = require('./src/routes/carts.route');
 
-const connectMongo = require('./src/db/mongoDB/connection');
-// const connectFire = require('./src/db/firebase/connection');
-
 const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, ()=>{
     console.log(`Escuchando en el puerto ${server.address().port}`)
 })
-
-connectMongo();
-// connectFire();
 
 // app.set('view engine', 'ejs')
 // app.set('views', './views')

@@ -1,17 +1,19 @@
 const { response } = require('express')
 
-//DAO Archivo
+//Descomentar y comentar DAOs para utilizar
+
+// //DAO Archivo
 // const CarritosDaoArchivo = require('../daos/carritos/CarritosDaoArchivo')
 // const containerCarts = new CarritosDaoArchivo()
 // const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')
 // const containerProds = new ProductosDaoArchivo()
 
-// DAO MongoDB
+// //DAO MongoDB
 const CarritosDaoMongoDb = require('../daos/carritos/CarritosDaoMongoDb')
 const containerCarts = new CarritosDaoMongoDb()
 const { containerProds } = require('../controllers/products.controller')
 
-//DAO Firebase
+// //DAO Firebase
 // const CarritosDaoFirebase = require('../daos/carritos/CarritosDaoFirebase')
 // const containerCarts = new CarritosDaoFirebase()
 // const { containerProds } = require('../controllers/products.controller')

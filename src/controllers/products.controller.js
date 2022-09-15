@@ -1,15 +1,16 @@
 const { response } = require('express')
-// const Products = require('../models/products.model')
 
-// DAO Archivo
+//Descomentar y comentar DAOs para utilizar
+
+// //DAO Archivo
 // const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')
 // const containerProds = new ProductosDaoArchivo()
 
-//DAO MongoDB
+// //DAO MongoDB
 // const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
 // const containerProds = new ProductosDaoMongoDb()
 
-//DAO Firebase
+// //DAO Firebase
 const ProductosDaoFirebase = require('../daos/productos/ProductosDaoFirebase')
 const containerProds = new ProductosDaoFirebase()
 

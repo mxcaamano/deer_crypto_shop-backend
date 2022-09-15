@@ -3,7 +3,7 @@
 # GET http://localhost:8080/api/productos/ HTTP/1.1
 # content-type: application/json
 
-# GET http://localhost:8080/api/productos/qjVMTnSh7ZrucScI5OsL HTTP/1.1
+# GET http://localhost:8080/api/productos/IGvCpk8E8SlZxVktXGRi HTTP/1.1
 # content-type: application/json
 
 # POST http://localhost:8080/api/productos/ HTTP/1.1
@@ -30,7 +30,7 @@
 #     "stock": 55
 # }
 
-# DELETE http://localhost:8080/api/productos/Z1EaCoAxrT2Yccoqs2xJ HTTP/1.1
+# DELETE http://localhost:8080/api/productos/W808ciruSiwo85LPLI34 HTTP/1.1
 # content-type: application/json
 
 # DELETE http://localhost:8080/api/productos/ HTTP/1.1
@@ -47,7 +47,7 @@
 # GET http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos HTTP/1.1
 # content-type: application/json
 
-# PUT http://localhost:8080/api/carritos/5BrlrsrWZlVENp3qSGJD/productos HTTP/1.1
+# PUT http://localhost:8080/api/carritos/6321021496b27dcf410c99d2/productos HTTP/1.1
 # content-type: application/json
 
 # {

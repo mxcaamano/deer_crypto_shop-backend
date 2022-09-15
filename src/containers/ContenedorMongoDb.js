@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const connectMongo = require('../db/mongodb/connection');
+connectMongo();
 
 class ContenedorMongoDb {
     constructor(collName, schema){
