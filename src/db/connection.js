@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const config = require('../../config')
 
 const connectMongo = async () => {
     try {
-        const url = 'mongodb+srv://admin:admin@cluster0.dbaqnvv.mongodb.net/ecommerce?retryWrites=true&w=majority'
+        const url = config.DBURL
         await mongoose.connect(url,{
             useNewUrlParser: true,
             useUnifiedTopology: true,

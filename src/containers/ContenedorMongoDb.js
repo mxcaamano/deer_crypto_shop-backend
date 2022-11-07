@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const connectMongo = require('../db/mongodb/connection');
-connectMongo();
+// const connectMongo = require('../db/mongodb/connection');
+// connectMongo();
 
 class ContenedorMongoDb {
     constructor(collName, schema){
@@ -42,7 +42,8 @@ class ContenedorMongoDb {
         try {
             const found = await this.coll.find();
             return found.length 
-            ? (console.log(found), found)
+            ? found
+            // ? (console.log(found), found)
             : console.log("No hay objetos")
         } 
         catch (error) {

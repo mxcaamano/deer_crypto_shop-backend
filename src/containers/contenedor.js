@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 
-class ContenedorArchivo {
+class Contenedor {
     constructor(ruta){
         this.ruta = ruta
     }
@@ -16,9 +16,9 @@ class ContenedorArchivo {
             let data = await fs.readFile(this.ruta, 'utf8');
             let dataParse = JSON.parse(data);
             dataParse.length 
-            ? await fs.writeFile(this.ruta, JSON.stringify([...dataParse, { ...obj, id: dataParse[dataParse.length - 1].id + 1, timestamp: Date.now() }], null, 2)) 
-            : await fs.writeFile(this.ruta, JSON.stringify([{...obj, id: 1, timestamp: Date.now()}], null, 2));
-            console.log(`El Objeto tiene el ID: ${dataParse.length + 2}`);
+            ? await fs.writeFile(this.ruta, JSON.stringify([...dataParse, { ...obj }], null, 2)) 
+            : await fs.writeFile(this.ruta, JSON.stringify([{...obj }], null, 2));
+            console.log(`Objeto guardado`);
         } catch (error) {
             console.log(error)            
         }
@@ -53,10 +53,10 @@ class ContenedorArchivo {
             if(objIndex !== -1){
                 data[objIndex] = obj
                 await fs.writeFile(this.ruta, JSON.stringify(data, null, 2)) 
-                console.log('Objeto actualizado')
+                return {mensaje: 'objeto actualizado' }
             }
             else {
-                console.log("No existe el objeto")
+                return {error: 'No existe el objeto'}
             }
         } catch (error) {
             console.log(error)            
@@ -84,7 +84,7 @@ class ContenedorArchivo {
             if (found){
                 let dataParseFilter = dataParse.filter(found => found.id !== number)
                 await fs.writeFile(this.ruta, JSON.stringify(dataParseFilter, null, 2), 'utf8')
-                console.log('Objeto eliminado');
+                console.log('objeto eliminado');
             }
             else{
                 console.log("No existe el objeto");
@@ -101,7 +101,7 @@ class ContenedorArchivo {
             let data = await fs.readFile(this.ruta, 'utf8');
             let dataParse = JSON.parse(data);
             dataParse.length 
-            ? (await fs.writeFile(this.ruta, JSON.stringify([])), console.log(`${dataParse.length} Objetos eliminados`)) 
+            ? (await fs.writeFile(this.ruta, JSON.stringify([])), console.log(`${dataParse.length} objetos eliminados`)) 
             : console.log("No hay objetos para eliminar.")    
         } 
         catch (error) {
@@ -110,4 +110,4 @@ class ContenedorArchivo {
     }
 }
 
-module.exports = { ContenedorArchivo }
+module.exports = Contenedor;

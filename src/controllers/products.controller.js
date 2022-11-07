@@ -1,30 +1,21 @@
-const { response } = require('express')
-
-//Descomentar y comentar DAOs para utilizar
-
-// //DAO Archivo
-// const ProductosDaoArchivo = require('../daos/productos/ProductosDaoArchivo')
-// const containerProds = new ProductosDaoArchivo()
-
-// //DAO MongoDB
-// const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
-// const containerProds = new ProductosDaoMongoDb()
-
-// //DAO Firebase
-const ProductosDaoFirebase = require('../daos/productos/ProductosDaoFirebase')
-const containerProds = new ProductosDaoFirebase()
+//DAO MongoDB
+const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
+const containerProds = new ProductosDaoMongoDb()
 
 // Variable de Permisos de Administrador
 const isAdmin = true
 
-const getProducts = async (req, res = response) => {
+const getProducts = async (req, res) => {
     const products = await containerProds.getAll();
-    products 
-    ? res.json(products)
-    : res.status(400).json({ error: 'No se encuentran productos' });
+    let state = null
+    products ? state = true : state = false
+    res.render('pages/index', {listExist: state, list: products} );
+    // products 
+    // ? res.json(products)
+    // : res.status(400).json({ error: 'No se encuentran productos' });
 }
 
-const getProductById = async (req, res = response) => {
+const getProductById = async (req, res) => {
     const id = req.params.id;
     const product = await containerProds.getById(id)
     return product 
@@ -32,7 +23,7 @@ const getProductById = async (req, res = response) => {
     : res.status(400).json({ error: 'No se encuentra el producto' });
 }
 
-const addProduct = async (req, res = response) => {
+const addProduct = async (req, res) => {
     if(isAdmin){
         const product = req.body;
         product.title && product.price && !isNaN(product.price) && product.description && product.thumbnail && product.code && product.stock && !isNaN(product.stock)
@@ -44,7 +35,7 @@ const addProduct = async (req, res = response) => {
     }
 }
 
-const updateProduct = async (req, res = response) => {
+const updateProduct = async (req, res) => {
     if(isAdmin){
     const { id } = req.params
     const { title, price, description, thumbnail, code, stock  } = req.body
@@ -57,7 +48,7 @@ const updateProduct = async (req, res = response) => {
     }
 }
 
-const deleteProduct = async (req, res = response) => {
+const deleteProduct = async (req, res) => {
     if(isAdmin){
     const id = req.params.id
     const found = await containerProds.getById(id)
@@ -71,7 +62,7 @@ const deleteProduct = async (req, res = response) => {
     }
 }
 
-const deleteAllProducts = async (req, res = response) => {
+const deleteAllProducts = async (req, res) => {
     if(isAdmin){
     const products = await containerProds.deleteAll();
     products 
