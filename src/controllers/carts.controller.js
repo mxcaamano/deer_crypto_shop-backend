@@ -1,11 +1,19 @@
 //DAO MongoDB
 const CarritosDaoMongoDb = require('../daos/carritos/CarritosDaoMongoDb');
 const containerCarts = new CarritosDaoMongoDb();
+
 const { containerProds } = require('../controllers/products.controller');
 const userModel = require('../models/user.model');
 
 // Variable de Permisos de Administrador
 const isAdmin = true
+
+//nodemailer
+const TEST_MAIL = 'shirley99@ethereal.email'
+const transporter = require('../utils/nodemailer.config')
+
+//twilio
+const sendPhoneMsg = require('../utils/twilio.config')
 
 const createCart = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
@@ -88,12 +96,13 @@ const getCart = async (req, res) => {
 const updateCart = async (req, res) => {
     const { id_prod, qty } = req.body
     const user = await userModel.findOne({_id: req.session.passport.user});
-    let cart = await containerCarts.getByEmail(user.email)
+    await createCart(req)
+    let cart = await containerCarts.getByEmail(user.email);
+    // if(!cart){
+    //     cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
+    //     await containerCarts.save(cart)
+    // }
     const product = await containerProds.getNative(id_prod)
-    if(!cart){
-        cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
-        await containerCarts.save(cart)
-    }
     if(product){
         product._id = id_prod
         product.id = cart.products.length + 1
@@ -136,10 +145,50 @@ const deleteCartProduct = async (req, res) => {
     }
 }
 
+const sendCart = async (req, res) => {
+    const { id_cart, total } = req.body
+    const user = await userModel.findOne({_id: req.session.passport.user});
+    const cart = await containerCarts.getById(id_cart)  
+    let arrayItems = "";
+    let arrayItemsMsg = "";
+    let n;
+    for (n in cart.products) {
+    arrayItems += `<div style="color: #2bf8bb;">
+                        <strong><u><p style="color: #2bf8bb;">${cart.products[n].title}</p></u></strong>            
+                        <img src=${cart.products[n].thumbnail} width="50" height="50" style="color: #2bf8bb;" alt="Imagen Producto"/><br>
+                        <span style="color: #4eaa93;">Cantidad: ${cart.products[n].qty}</span>
+                        <h5 style="color: #4eaa93;">Precio Unitario: ${cart.products[n].price} U$S</h5>
+                        <h4 style="color: #2bf8bb;">Total Producto: ${cart.products[n].qty * cart.products[n].price} U$S</h4>
+                        <br>
+                    </div>`;
+    arrayItemsMsg += `
+     • ${cart.products[n].title}           
+     Cantidad: ${cart.products[n].qty}
+     Precio Unitario: ${cart.products[n].price} U$S
+     Total Producto: ${cart.products[n].qty * cart.products[n].price} U$S\n`;
+    }
+    const mailOptions =  {
+        from: `${user.email}`,
+        to: TEST_MAIL,
+        subject: `Nuevo pedido de: ${user.name}`,
+        html: `<div style="background-color:black;"><br>
+                <h1 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Pedido de ${user.name}:</h1>
+                <ul>${arrayItems}</ul>
+                <h2 style="color: #2bf8bb;">&nbsp&nbsp&nbspTotal: ${total} U$S</h2><br>
+                </div><br>`
+    }
+    await transporter.sendMail(mailOptions)
+    await sendPhoneMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162','+541122336840')
+    await sendPhoneMsg(`Pedido de ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886','whatsapp:+5491122336840')
+    await containerCarts.deleteById(id_cart)    
+    res.status(200).json({ message: 'Pedido enviado' })
+}
+
 module.exports = {
     createCart,
     deleteCart,
     getCart,
     updateCart,
-    deleteCartProduct
+    deleteCartProduct,
+    sendCart
 }
