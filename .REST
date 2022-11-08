@@ -6,16 +6,16 @@
 # GET http://localhost:8080/api/productos/IGvCpk8E8SlZxVktXGRi HTTP/1.1
 # content-type: application/json
 
-# POST http://localhost:8080/api/productos/ HTTP/1.1
+# POST http://localhost:8080/productos/ HTTP/1.1
 # content-type: application/json
 
 # {
-#     "title": "articulo ++++",
-#     "price": 212,
+#     "title": "ultimo producto",
+#     "price": 45,
 #     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis corporis inventore maxime tempore ipsum magnam, asperiores molestias sed quisquam laboriosam nobis pariatur, placeat consequatur labore reprehenderit fugiat voluptates autem sunt.",
 #     "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_925228-MLA49727654203_042022-F.webp",
-#     "code": "3dfgfgd",
-#     "stock": 44
+#     "code": "2w5dhjlj",
+#     "stock": 53
 # }
 
 # PUT http://localhost:8080/api/productos/W808ciruSiwo85LPLI34 HTTP/1.1
@@ -61,3 +61,11 @@
 
 # GET http://localhost:8080/api/usuarios HTTP/1.1
 # content-type: application/json
+
+# POST http://localhost:8080/login HTTP/1.1
+# content-type: application/json
+
+# {
+#     "email": "mcaamano2@deercrypto.com",
+#     "password": "lalala1"
+# }

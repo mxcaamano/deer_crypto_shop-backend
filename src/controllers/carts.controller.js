@@ -9,18 +9,31 @@ const isAdmin = true
 
 const createCart = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
-    const carts = await containerCarts.getAll();
-    if(carts.find(e => e.email == user.email)){
-        res.status(200).json({ message: 'El carrito ya existe' })
+    const cart = await containerCarts.getByEmail(user.email)
+    if(cart){
+        console.log("El carrito ya existe")
     }
     else{
         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
-        cart
-        ? (await containerCarts.save(cart),
-        res.status(200).json({ message: 'Carrito creado' }))
-        : res.status(400).json({ message: 'No se pudo crear el carrito' })
+        await containerCarts.save(cart)
+        console.log("Carrito creado")
     }
 }
+
+// const createCart = async (req, res) => {
+//     const user = await userModel.findOne({_id: req.session.passport.user});
+//     const carts = await containerCarts.getAll();
+//     if(carts.find(e => e.email == user.email)){
+//         res.status(200).json({ message: 'El carrito ya existe' })
+//     }
+//     else{
+//         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
+//         cart
+//         ? (await containerCarts.save(cart),
+//         res.status(200).json({ message: 'Carrito creado' }))
+//         : res.status(400).json({ message: 'No se pudo crear el carrito' })
+//     }
+// }
 
 // const createCart = async (req, res) => {
 //     const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
@@ -31,20 +44,37 @@ const createCart = async (req, res) => {
 // }
 
 const deleteCart = async (req, res) => {
-    const id = req.params.id
-    const found = await containerCarts.getById(id)
-    found
-    ? (await containerCarts.deleteById(id), 
+    const { id_cart } = req.body
+    const cart = await containerCarts.getById(id_cart)
+    cart
+    ? (await containerCarts.deleteById(cart.id), 
     res.status(200).json({ message: 'Carrito eliminado' }))
     : res.status(400).json({ message: 'El carrito no existe' })
 }
 
+// const deleteCart = async (req, res) => {
+//     const id = req.params.id
+//     const found = await containerCarts.getById(id)
+//     found
+//     ? (await containerCarts.deleteById(id), 
+//     res.status(200).json({ message: 'Carrito eliminado' }))
+//     : res.status(400).json({ message: 'El carrito no existe' })
+// }
+
 const getCart = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
     const cart = await containerCarts.getByEmail(user.email)
-    cart
-    ? res.status(200).json({ products: cart.products })
-    : res.status(400).json({ message: 'El carrito no existe' })
+    if(cart){
+        state = true;
+        const qtyItems = cart.products.reduce((prev, curr) => prev + curr.qty, 0);
+        const total = cart.products.reduce((prev, curr) => prev + curr.qty * curr.price, 0);
+        res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart._id})
+    }
+    else{
+        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
+        await containerCarts.save(cart)
+        res.render('pages/cart', {list: cart.products})
+    }
 }
 
 // const getCart = async (req, res) => {
@@ -56,18 +86,25 @@ const getCart = async (req, res) => {
 // }
 
 const updateCart = async (req, res) => {
-    const { id_prod } = req.body
-    const id_user = req.session.passport.user
-    const user = await userModel.findOne({_id: id_user});
-    const carts = await containerCarts.getAll();
-    const cart = carts.find(e => e.email == user.email)
-    const product = await containerProds.getById(id_prod)
-    product 
-    ? (product._id = cart.products.length + 1, 
-    cart.products.push(product),
-    res.status(200).json({ message: 'Producto añadido al carrito' }),
-    res.json(await containerCarts.updateById(cart._id, {products: cart.products, timestamp: cart.timestamp})))
-    : res.status(400).json({ message: 'El producto no existe' }) 
+    const { id_prod, qty } = req.body
+    const user = await userModel.findOne({_id: req.session.passport.user});
+    let cart = await containerCarts.getByEmail(user.email)
+    const product = await containerProds.getNative(id_prod)
+    if(!cart){
+        cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
+        await containerCarts.save(cart)
+    }
+    if(product){
+        product._id = id_prod
+        product.id = cart.products.length + 1
+        product.qty = parseInt(qty)
+        cart.products.push(product)
+        await containerCarts.updateById(cart._id, {products: cart.products, timestamp: cart.timestamp})
+        res.status(200).json({ message: 'Producto añadido al carrito' })
+    }
+    else{
+        res.status(400).json({ message: 'El producto no existe' })
+    }
 }
 
 // const updateCart = async (req, res) => {

@@ -40,6 +40,17 @@ class ProductosDaoMongoDb extends ContenedorMongoDb{
             }
         })
     }
+    async getNative(id){
+        try {
+            const found = await (await this.coll.findOne({_id: id}, {__v: 0})).toObject();
+            return found
+            ? found
+            : console.log("No se encuentra el objeto")
+        } 
+        catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = ProductosDaoMongoDb

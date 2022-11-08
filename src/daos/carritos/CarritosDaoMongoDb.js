@@ -27,8 +27,8 @@ class CarritosDaoMongoDb extends ContenedorMongoDb{
         try {
             const found = await this.coll.findOne({email: email}, {__v: 0});
             return found
-            ? (console.log(found), found)
-            : console.log("No se encuentra email")
+            ? found
+            : console.log("No se encuentra el carrito")
         } 
         catch (error) {
             console.log(error)
