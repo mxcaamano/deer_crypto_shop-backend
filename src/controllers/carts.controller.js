@@ -76,12 +76,12 @@ const getCart = async (req, res) => {
         state = true;
         const qtyItems = cart.products.reduce((prev, curr) => prev + curr.qty, 0);
         const total = cart.products.reduce((prev, curr) => prev + curr.qty * curr.price, 0);
-        res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart._id})
+        res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart._id, userName: user.name, userImg: user.imgURL})
     }
     else{
-        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
+        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now(), userName: user.name, userImg: user.imgURL}
         await containerCarts.save(cart)
-        res.render('pages/cart', {list: cart.products})
+        res.render('pages/cart', {list: cart.products, userName: user.name, userImg: user.imgUrl})
     }
 }
 
