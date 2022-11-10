@@ -6,6 +6,7 @@ const config = require('./config');
 const cluster = require('cluster');
 const compression = require('compression')
 const logger = require('./src/utils/logger')
+const MongoStore =  require('connect-mongo')
 
 // Sesiones, cookies y Passport
 const passport = require('passport');
@@ -20,6 +21,7 @@ app.use(
       secret: config.SECRET,
       resave: true,
       saveUninitialized: true,
+      store: MongoStore.create({ mongoUrl: process.env.DBURL, mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true} }),
       cookie: {
         maxAge: 100000,
       },
@@ -50,8 +52,8 @@ const contenedorChats = new Contenedor('./src/db/messages.txt')
 
 //Server
 let server
-const PORT = process.argv[2] || config.PORT;
-const MODE = process.argv[3] || config.MODE;
+const PORT = process.env.PORT || config.PORT;
+const MODE = process.env.MODE || config.MODE;
 const { CPUqty } = require('./src/routes/info.router');
 
 if(MODE === 'cluster' && cluster.isPrimary){

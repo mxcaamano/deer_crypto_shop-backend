@@ -9,7 +9,7 @@ const getProducts = async (req, res) => {
     const products = await containerProds.getAll();
     let state = null
     products ? state = true : state = false
-    res.render('pages/index', {listExist: state, list: products} );
+    res.render('pages/products', {listExist: state, list: products} );
     // products 
     // ? res.json(products)
     // : res.status(400).json({ error: 'No se encuentran productos' });

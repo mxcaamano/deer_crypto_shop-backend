@@ -19,16 +19,13 @@ socket.on('arrMsg', data => {
   })
   
   const addMessage = (e) => {
+    let name = document.getElementById('name').value
     let email = document.getElementById('email').value
-    let alias = document.getElementById('alias').value
-    let avatar = document.getElementById('avatar').value
-    let nombre = document.getElementById('nombre').value
-    let apellido = document.getElementById('apellido').value
-    let edad = document.getElementById('edad').value
     let text = document.getElementById('text').value
-    const chatMsg = {author:{id: email, nombre: nombre, apellido: apellido, edad: edad, alias: alias, avatar: avatar}, text: text}
+    let avatar = document.getElementById('avatar').value
+    const chatMsg = {author:{id: email, alias: name, avatar: avatar}, text: text}
     console.log(chatMsg.text)
-    if(chatMsg.author.id && chatMsg.author.alias && chatMsg.author.avatar && chatMsg.author.nombre && chatMsg.author.apellido && chatMsg.author.edad && chatMsg.text){
+    if(chatMsg.author.id && chatMsg.author.alias && chatMsg.author.avatar && chatMsg.text){
         socket.emit('add-msg', chatMsg)
         return false
     }

@@ -3,7 +3,7 @@
 const logger = require('../utils/logger');
 
 //nodemailer
-// const TEST_MAIL = 'shirley99@ethereal.email';
+// const mail = process.env.TEST_MAIL;
 // const transporter = require('../utils/nodemailer.config');
 
 const getSignUp = (req, res) => {
@@ -19,7 +19,7 @@ const getSignUp = (req, res) => {
 //     await User.save();
 //     const mailOptions =  {
 //       from: `${user.email}`,
-//       to: TEST_MAIL,
+//       to: mail,
 //       subject: `Nuevo registro`,
 //       html: `<div style="background-color:black;"><br>
 //               <h1 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Nuevo Registro!</h1><br>

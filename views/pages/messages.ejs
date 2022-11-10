@@ -14,12 +14,8 @@
 </head>
 <body class="deer-theme-dark">
     <%- include('../partials/header.ejs')%>
-    <div class="container py-3">
-        <h2>CHAT</h2>
-        <h3>Bienvenido <%= user %> ! </h3>
-        <%- include('../partials/chat.ejs')%>
-    </div>
-<%- include('../partials/footer.ejs')%>
+    <%- include('../partials/chat.ejs')%>
+    <%- include('../partials/footer.ejs')%>
 <script src="/messages.js"></script>
 </body>
 </html>

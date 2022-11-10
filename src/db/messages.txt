@@ -262,5 +262,37 @@
       "avatar": "https://gravatar.com/avatar/813510d383a8d3c66b0fe1ba6562ce64?s=400&d=robohash&r=x"
     },
     "text": "fddf"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "name": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png/"
+    },
+    "text": "hola, probando nueva version!"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "alias": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png/"
+    },
+    "text": "dsds"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "alias": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.pn/"
+    },
+    "text": "hola, probando link de avatar"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "alias": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
+    },
+    "text": "probando avatar x2"
   }
 ]

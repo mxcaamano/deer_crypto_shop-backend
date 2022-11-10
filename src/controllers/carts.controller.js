@@ -9,11 +9,11 @@ const userModel = require('../models/user.model');
 const isAdmin = true
 
 //nodemailer
-const TEST_MAIL = 'shirley99@ethereal.email'
+const mail = 'shirley99@ethereal.email'
 const transporter = require('../utils/nodemailer.config')
 
 //twilio
-const sendPhoneMsg = require('../utils/twilio.config')
+const sendMsg = require('../utils/twilio.config')
 
 const createCart = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
@@ -76,12 +76,12 @@ const getCart = async (req, res) => {
         state = true;
         const qtyItems = cart.products.reduce((prev, curr) => prev + curr.qty, 0);
         const total = cart.products.reduce((prev, curr) => prev + curr.qty * curr.price, 0);
-        res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart._id, userName: user.name, userImg: user.imgURL})
+        res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart._id})
     }
     else{
-        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now(), userName: user.name, userImg: user.imgURL}
+        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
         await containerCarts.save(cart)
-        res.render('pages/cart', {list: cart.products, userName: user.name, userImg: user.imgUrl})
+        res.render('pages/cart', {list: cart.products})
     }
 }
 
@@ -169,7 +169,7 @@ const sendCart = async (req, res) => {
     }
     const mailOptions =  {
         from: `${user.email}`,
-        to: TEST_MAIL,
+        to: mail,
         subject: `Nuevo pedido de: ${user.name}`,
         html: `<div style="background-color:black;"><br>
                 <h1 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Pedido de ${user.name}:</h1>
@@ -178,8 +178,8 @@ const sendCart = async (req, res) => {
                 </div><br>`
     }
     await transporter.sendMail(mailOptions)
-    await sendPhoneMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162','+541122336840')
-    await sendPhoneMsg(`Pedido de ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886','whatsapp:+5491122336840')
+    // await sendMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162',process.env.PHONE)
+    await sendMsg(`Pedido de ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
     await containerCarts.deleteById(id_cart)    
     res.status(200).json({ message: 'Pedido enviado' })
 }
