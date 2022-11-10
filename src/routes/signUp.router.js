@@ -4,7 +4,7 @@ const userModel = require('../models/user.model');
 const { createHash } = require('../utils/bcrypt.config');
 const { userMiddleware } = require('../middlewares/middlewares.js');
 const upload = require('../middlewares/uploadMiddleware');
-const Resize = require('../utils/Resize');
+const Resize = require('../utils/resize');
 // const path = require('path');
 
 //nodemailer
