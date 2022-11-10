@@ -660,3 +660,6 @@
 {"level":"warn","message":"La ruta /uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.pn/ GET no está implementada"}
 {"level":"warn","message":"La ruta /uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png/ GET no está implementada"}
 {"level":"warn","message":"La ruta /products GET no está implementada"}
+{"level":"warn","message":"La ruta /uploads/avatars/26f4ab0c-6ffe-489b-bf72-d6e9f51258f2.png GET no está implementada"}
+{"level":"warn","message":"La ruta /uploads/avatars/26f4ab0c-6ffe-489b-bf72-d6e9f51258f2.png GET no está implementada"}
+{"level":"warn","message":"La ruta /uploads/avatars/26f4ab0c-6ffe-489b-bf72-d6e9f51258f2.png GET no está implementada"}

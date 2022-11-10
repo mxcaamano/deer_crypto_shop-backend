@@ -8,7 +8,6 @@ const getMessages = async (req, res) => {
   try {
     const id = req.session.passport.user
     const user = await userModel.findOne({_id: id});
-    // const Msgs = await contenedor.getAll()
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
     res.render('pages/messages', {name: user.name, email: user.email, imgURL: user.imgURL});
   } catch(error){

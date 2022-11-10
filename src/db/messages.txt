@@ -41,51 +41,7 @@
       "alias": "Ger",
       "avatar": "https://a.rsg.sc/s/GTAO/n/ssasss-avatars-driver-256x256.png"
     },
-    "text": "Hola!, estoy probando el chat con otro usuario"
-  },
-  {
-    "author": {
-      "id": "martin@deercryptoshop.com",
-      "nombre": "Martin",
-      "apellido": "Caamaño",
-      "edad": 26,
-      "alias": "Tincho",
-      "avatar": "https://a.rsg.sc/s/GTAO/n/GTAO-After-Hours-Tony-256x256.png"
-    },
-    "text": "Funciona bien el chat?"
-  },
-  {
-    "author": {
-      "id": "martin@deercryptoshop.com",
-      "nombre": "Martin",
-      "apellido": "Caamaño",
-      "edad": 26,
-      "alias": "Tincho",
-      "avatar": "https://a.rsg.sc/s/GTAO/n/GTAO-After-Hours-Tony-256x256.png"
-    },
-    "text": "Se guardarán correctamente los mensajes. en mongodb?"
-  },
-  {
-    "author": {
-      "id": "german@deercryptoshop.com",
-      "nombre": "German",
-      "apellido": "Caamaño",
-      "edad": 31,
-      "alias": "Ger",
-      "avatar": "https://a.rsg.sc/s/GTAO/n/ssasss-avatars-driver-256x256.png"
-    },
     "text": "Más mensajes de prueba!"
-  },
-  {
-    "author": {
-      "id": "mcabdc@outlook.com",
-      "name": "Martin",
-      "lastName": "Abdc",
-      "age": 55,
-      "alias": "Mabdc",
-      "avatar": "https://a.rsg.sc/s/GTAO/n/GTAO-After-Hours-Solomun-256x256.png"
-    },
-    "text": "Holaaaa!"
   },
   {
     "author": {
@@ -278,14 +234,6 @@
       "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
     },
     "text": "dsds"
-  },
-  {
-    "author": {
-      "id": "mcaamano2@deercrypto.com",
-      "alias": "Martin",
-      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
-    },
-    "text": "hola, probando link de avatar"
   },
   {
     "author": {

@@ -22,7 +22,7 @@ function process(event) {
  const data = new URLSearchParams();
  data.append("phone", phoneNumber);
 
- fetch("http://intl-tel-input-9350.twil.io/lookup", {
+ fetch("https://intl-tel-input-9350.twil.io/lookup", {
  method: "POST",
  body: data,
  })

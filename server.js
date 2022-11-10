@@ -125,7 +125,8 @@ io.on('connection', async socket => {
         // const msg = {...data, date: formatDate(new Date())}
         const msg = data
         chat.push(msg)
-        await contenedorChats.save(msg)
+        // Guardado deshabilitado, pendientede implementar para la prox. entrega.
+        // await contenedorChats.save(msg)
         io.sockets.emit( 'arrMsg' ,chatMsg)
       })
       socket.emit('arrMsg', chatMsg)
