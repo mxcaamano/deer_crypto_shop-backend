@@ -3,7 +3,6 @@ const socket = io().connect()
 // Render de Chat
 
 const renderMsgs = (data) => {
-    console.log(data)
     let chatcontainer = document.querySelector('#chat-container')
     let html = data.map(msg => `<li class="p-2">
       <img src="${msg.author.avatar}" alt="" width="50" height="50">
@@ -24,7 +23,6 @@ socket.on('arrMsg', data => {
     let text = document.getElementById('text').value
     let avatar = document.getElementById('avatar').value
     const chatMsg = {author:{id: email, alias: name, avatar: avatar}, text: text}
-    console.log(chatMsg.text)
     if(chatMsg.author.id && chatMsg.author.alias && chatMsg.author.avatar && chatMsg.text){
         socket.emit('add-msg', chatMsg)
         return false

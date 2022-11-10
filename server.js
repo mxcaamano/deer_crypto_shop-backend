@@ -57,19 +57,19 @@ const MODE = process.env.MODE || config.MODE;
 const { CPUqty } = require('./src/routes/info.router');
 
 if(MODE === 'cluster' && cluster.isPrimary){
-    console.log(PORT, MODE);
-    console.log(`Master ${process.pid} is running`);
+    logger.info(PORT, MODE);
+    logger.info(`Master ${process.pid} is running`);
     for (let i = 0; i < CPUqty ; i++) {
       cluster.fork();
     }
     cluster.on('exit', (worker, code, signal) => {
-      console.log(`Worker ${worker.process.pid} died`);
+      logger.info(`Worker ${worker.process.pid} died`);
     });
   }   
 else {
     server = app.listen(PORT, () =>{
-    console.log(`Port: ${PORT}, Mode: ${MODE}`)
-    MODE === 'cluster' && console.log(`Worker ${process.pid} started`)
+    logger.info(`Port: ${PORT}, Mode: ${MODE}`)
+    MODE === 'cluster' && logger.info(`Worker ${process.pid} started`)
     })
   }
 // const server = app.listen(PORT, ()=>{
@@ -107,7 +107,7 @@ app.use(routes)
 io.on('connection', async socket => {
     const chat = await contenedorChats.getAll();
     
-    console.log('New user connected: ', socket.id)
+    logger.info('New user connected: ', socket.id)
 
     const message = {
         id: socket.id,
@@ -131,6 +131,6 @@ io.on('connection', async socket => {
       socket.emit('arrMsg', chatMsg)
 
     socket.on('disconnect', () => {
-        console.log('usuario desconectado: ', socket.id)
+        logger.info('usuario desconectado: ', socket.id)
     })
 })

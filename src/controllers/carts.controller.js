@@ -4,6 +4,7 @@ const containerCarts = new CarritosDaoMongoDb();
 
 const { containerProds } = require('../controllers/products.controller');
 const userModel = require('../models/user.model');
+const logger = require('../utils/logger')
 
 // Variable de Permisos de Administrador
 const isAdmin = true
@@ -19,12 +20,12 @@ const createCart = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
     const cart = await containerCarts.getByEmail(user.email)
     if(cart){
-        console.log("El carrito ya existe")
+        logger.info("El carrito ya existe")
     }
     else{
         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
         await containerCarts.save(cart)
-        console.log("Carrito creado")
+        logger.info("Carrito creado")
     }
 }
 
@@ -71,6 +72,7 @@ const deleteCart = async (req, res) => {
 // }
 
 const getCart = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
     const user = await userModel.findOne({_id: req.session.passport.user});
     const cart = await containerCarts.getByEmail(user.email)
     if(cart){
@@ -138,7 +140,6 @@ const deleteCartProduct = async (req, res) => {
     const product = cart.products.find(p => p._id == id_prod)
     if(product){
     const productsArr = cart.products.filter(p => p !== product)
-    console.log(productsArr)
     res.status(200).json({ message: 'Producto eliminado del carrito' })
     res.json(await containerCarts.updateById(id, {timestamp: cart.timestamp, products: productsArr}))
     }

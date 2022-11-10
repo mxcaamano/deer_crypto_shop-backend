@@ -1,5 +1,7 @@
 const twilio = require('twilio');
 
+const logger = require('../utils/logger')
+
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 
@@ -12,9 +14,9 @@ async function sendMsg(body, from, to){
         from: from,
         to: to
     })
-    console.log(message)
+    logger.info(message)
     } catch (error) {
-    console.log(error)
+    logger.error(error)
     }
 }
 

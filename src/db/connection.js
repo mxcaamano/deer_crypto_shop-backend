@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const config = require('../../config')
+const logger = require('../utils/logger')
 
 const connectMongo = async () => {
     try {
@@ -8,9 +9,9 @@ const connectMongo = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        console.log('MongoDB connected')
+        logger.info('MongoDB connected')
     } catch (error) {
-        console.error(error)
+        logger.error(error)
     }
 }
 

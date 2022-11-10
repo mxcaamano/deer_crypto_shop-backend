@@ -2,10 +2,13 @@
 const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
 const containerProds = new ProductosDaoMongoDb()
 
+const logger = require('../utils/logger')
+
 // Variable de Permisos de Administrador
 const isAdmin = true
 
 const getProducts = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
     const products = await containerProds.getAll();
     let state = null
     products ? state = true : state = false
@@ -16,6 +19,7 @@ const getProducts = async (req, res) => {
 }
 
 const getProductById = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
     const id = req.params.id;
     const product = await containerProds.getById(id)
     return product 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 // const connectMongo = require('../db/mongodb/connection');
 // connectMongo();
+const logger = require('../utils/logger')
 
 class ContenedorMongoDb {
     constructor(collName, schema){
@@ -12,7 +13,7 @@ class ContenedorMongoDb {
             const created = await this.coll.create(obj)
             return created;
         } catch (error) {
-            console.log(error)            
+            logger.error(error)            
         }
         
     }
@@ -21,20 +22,20 @@ class ContenedorMongoDb {
         try {
             const found = await this.coll.findOne({_id: id}, {__v: 0});
             return found
-            ? (console.log(found), found)
-            : console.log("No se encuentra el objeto")
+            ? (logger.info(found), found)
+            : logger.info("No se encuentra el objeto")
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 
     async updateById(id, props){
         try {
             const updated = await this.coll.updateOne({_id: id}, { $set: props })
-            console.log(updated)
+            logger.info(updated)
         } catch (error) {
-            console.log(error)            
+            logger.error(error)            
         }
     }
 
@@ -44,10 +45,10 @@ class ContenedorMongoDb {
             return found.length 
             ? found
             // ? (console.log(found), found)
-            : console.log("No hay objetos")
+            : logger.info("No hay objetos")
         } 
         catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -55,15 +56,15 @@ class ContenedorMongoDb {
         try {
             const deleted = await this.coll.deleteOne({_id: id})
             if (deleted.deletedCount > 0){
-                console.log('Objeto eliminado');
+                logger.info('Objeto eliminado');
             }
             else{
-                console.log("No existe el objeto");
+                logger.info("No existe el objeto");
             }
             
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 
@@ -71,11 +72,11 @@ class ContenedorMongoDb {
         try {
             const deleted = await this.coll.deleteMany()
             deleted.deletedCount 
-            ? console.log(`${deleted.deletedCount} objetos eliminados`) 
-            : console.log("No hay objetos para eliminar.")    
+            ? logger.info(`${deleted.deletedCount} objetos eliminados`) 
+            : logger.info("No hay objetos para eliminar.")    
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }

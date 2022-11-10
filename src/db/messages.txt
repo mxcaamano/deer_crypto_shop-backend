@@ -294,5 +294,21 @@
       "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
     },
     "text": "probando avatar x2"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "alias": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
+    },
+    "text": "cfsdfd"
+  },
+  {
+    "author": {
+      "id": "mcaamano2@deercrypto.com",
+      "alias": "Martin",
+      "avatar": "/uploads/avatars/c02b244a-0678-4400-b2ca-25d53c1f80e7.png"
+    },
+    "text": "kkkk"
   }
 ]

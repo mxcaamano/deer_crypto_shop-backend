@@ -1,4 +1,5 @@
-const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb')
+const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb');
+const logger = require('../../utils/logger')
 
 class ProductosDaoMongoDb extends ContenedorMongoDb{
     constructor(){
@@ -44,11 +45,9 @@ class ProductosDaoMongoDb extends ContenedorMongoDb{
         try {
             const found = await (await this.coll.findOne({_id: id}, {__v: 0})).toObject();
             return found
-            ? found
-            : console.log("No se encuentra el objeto")
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }

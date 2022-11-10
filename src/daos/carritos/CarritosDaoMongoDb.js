@@ -1,4 +1,5 @@
 const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb')
+const logger = require('../../utils/logger')
 
 class CarritosDaoMongoDb extends ContenedorMongoDb{
     constructor(){
@@ -27,11 +28,9 @@ class CarritosDaoMongoDb extends ContenedorMongoDb{
         try {
             const found = await this.coll.findOne({email: email}, {__v: 0});
             return found
-            ? found
-            : console.log("No se encuentra el carrito")
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }

@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+const logger = require('../utils/logger')
 
 class Contenedor {
     constructor(ruta){
@@ -18,9 +19,9 @@ class Contenedor {
             dataParse.length 
             ? await fs.writeFile(this.ruta, JSON.stringify([...dataParse, { ...obj }], null, 2)) 
             : await fs.writeFile(this.ruta, JSON.stringify([{...obj }], null, 2));
-            console.log(`Objeto guardado`);
+            logger.info(`Objeto guardado`);
         } catch (error) {
-            console.log(error)            
+            logger.error(error)            
         }
         
     }
@@ -31,24 +32,23 @@ class Contenedor {
             let dataParse = JSON.parse(data);
             let found = dataParse.find(found => found.id === number )
             if (found){
-                console.log(found);
+                logger.info(found);
                 return found
             }
             else{
-                console.log("No se encuentra el objeto");
+                logger.info("No se encuentra el objeto");
                 return null;
             }
             
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 
     async updateById(obj){
         try {
             let data = await this.#readFileFunction(this.ruta);
-            console.log(data)
             const objIndex = data.findIndex(prod => prod.id === obj.id)
             if(objIndex !== -1){
                 data[objIndex] = obj
@@ -59,7 +59,7 @@ class Contenedor {
                 return {error: 'No existe el objeto'}
             }
         } catch (error) {
-            console.log(error)            
+            logger.error(error)            
         }
     }
 
@@ -69,10 +69,10 @@ class Contenedor {
             let dataParse = JSON.parse(data);
             return dataParse.length 
             ? dataParse
-            : console.log("No hay objetos")
+            : logger.info("No hay objetos")
         } 
         catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -84,15 +84,15 @@ class Contenedor {
             if (found){
                 let dataParseFilter = dataParse.filter(found => found.id !== number)
                 await fs.writeFile(this.ruta, JSON.stringify(dataParseFilter, null, 2), 'utf8')
-                console.log('objeto eliminado');
+                logger.info('objeto eliminado');
             }
             else{
-                console.log("No existe el objeto");
+                logger.info("No existe el objeto");
             }
             
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 
@@ -101,11 +101,11 @@ class Contenedor {
             let data = await fs.readFile(this.ruta, 'utf8');
             let dataParse = JSON.parse(data);
             dataParse.length 
-            ? (await fs.writeFile(this.ruta, JSON.stringify([])), console.log(`${dataParse.length} objetos eliminados`)) 
-            : console.log("No hay objetos para eliminar.")    
+            ? (await fs.writeFile(this.ruta, JSON.stringify([])), logger.info(`${dataParse.length} objetos eliminados`)) 
+            : logger.info("No hay objetos para eliminar.")    
         } 
         catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }
