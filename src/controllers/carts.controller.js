@@ -56,7 +56,8 @@ const deleteCart = async (req, res) => {
     const cart = await containerCarts.getById(id_cart)
     cart
     ? (await containerCarts.deleteById(cart.id), 
-    res.status(200).json({ message: 'Carrito eliminado' }))
+    res.redirect('/carrito'))
+    // res.status(200).json({ message: 'Carrito eliminado' }))
     : res.status(400).json({ message: 'El carrito no existe' })
 }
 
@@ -109,7 +110,8 @@ const updateCart = async (req, res) => {
         product.qty = parseInt(qty)
         cart.products.push(product)
         await containerCarts.updateById(cart._id, {products: cart.products, timestamp: cart.timestamp})
-        res.status(200).json({ message: 'Producto añadido al carrito' })
+        // res.status(200).json({ message: 'Producto añadido al carrito' })
+        res.redirect('/carrito')
     }
     else{
         res.status(400).json({ message: 'El producto no existe' })
@@ -178,10 +180,11 @@ const sendCart = async (req, res) => {
                 </div><br>`
     }
     await transporter.sendMail(mailOptions)
-    // await sendMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162',process.env.PHONE)
+    await sendMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162',process.env.PHONE)
     await sendMsg(`Pedido de ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
-    await containerCarts.deleteById(id_cart)    
-    res.status(200).json({ message: 'Pedido enviado' })
+    await containerCarts.deleteById(id_cart)
+    res.redirect('/productos')
+    // res.status(200).json({ message: 'Pedido enviado' })
 }
 
 module.exports = {
