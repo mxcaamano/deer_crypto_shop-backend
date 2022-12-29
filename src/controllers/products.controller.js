@@ -1,7 +1,9 @@
 //DAO MongoDB
-const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
-const containerProds = new ProductosDaoMongoDb()
+// const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
+// const containerProds = new ProductosDaoMongoDb()
 
+const businessProducts = require('../business/businessProducts')
+const containerProds = businessProducts
 const logger = require('../utils/logger')
 
 // Variable de Permisos de Administrador
@@ -22,9 +24,13 @@ const getProductById = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
     const id = req.params.id;
     const product = await containerProds.getById(id)
-    return product 
-    ? res.json(product) 
-    : res.status(400).json({ error: 'No se encuentra el producto' });
+    console.log(product)
+    let state = null
+    product ? state = true : state = false
+    res.render('pages/productDetail', {exist: state, item: product} );
+    // return product 
+    // ? res.json(product) 
+    // : res.status(400).json({ error: 'No se encuentra el producto' });
 }
 
 const addProduct = async (req, res) => {

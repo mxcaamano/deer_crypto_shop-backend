@@ -1,16 +1,30 @@
 const mongoose = require('mongoose')
-// const connectMongo = require('../db/mongodb/connection');
-// connectMongo();
 const logger = require('../utils/logger')
+let instance = null
 
 class ContenedorMongoDb {
-    constructor(collName, schema){
-        this.coll = mongoose.model(collName, schema)
+    constructor(dbUrl, schema){
+        this.db = dbUrl 
+        this.schema = schema
+        this.getInstance();
+    }
+
+    async getInstance(){
+        if(instance){
+            logger.info('MongoDB already connected')
+            return instance;
+        }
+        instance = mongoose.connect(this.db ,{
+            useNewUrlParser:true,
+            useUnifiedTopology:true
+        });
+        logger.info('MongoDB connected')
+        return instance;
     }
 
     async save(obj){
         try {
-            const created = await this.coll.create(obj)
+            const created = await this.schema.create(obj)
             return created;
         } catch (error) {
             logger.error(error)            
@@ -20,7 +34,7 @@ class ContenedorMongoDb {
 
     async getById(id){
         try {
-            const found = await this.coll.findOne({_id: id}, {__v: 0});
+            const found = await this.schema.findOne({_id: id}, {__v: 0});
             return found
             ? (logger.info(found), found)
             : logger.info("No se encuentra el objeto")
@@ -32,7 +46,7 @@ class ContenedorMongoDb {
 
     async updateById(id, props){
         try {
-            const updated = await this.coll.updateOne({_id: id}, { $set: props })
+            const updated = await this.schema.updateOne({_id: id}, { $set: props })
             logger.info(updated)
         } catch (error) {
             logger.error(error)            
@@ -41,7 +55,7 @@ class ContenedorMongoDb {
 
     async getAll(){
         try {
-            const found = await this.coll.find();
+            const found = await this.schema.find();
             return found.length 
             ? found
             // ? (console.log(found), found)
@@ -54,7 +68,7 @@ class ContenedorMongoDb {
 
     async deleteById(id){
         try {
-            const deleted = await this.coll.deleteOne({_id: id})
+            const deleted = await this.schema.deleteOne({_id: id})
             if (deleted.deletedCount > 0){
                 logger.info('Objeto eliminado');
             }
@@ -70,7 +84,7 @@ class ContenedorMongoDb {
 
     async deleteAll(){
         try {
-            const deleted = await this.coll.deleteMany()
+            const deleted = await this.schema.deleteMany()
             deleted.deletedCount 
             ? logger.info(`${deleted.deletedCount} objetos eliminados`) 
             : logger.info("No hay objetos para eliminar.")    

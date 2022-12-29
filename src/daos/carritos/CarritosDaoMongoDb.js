@@ -1,32 +1,15 @@
 const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb')
+const cartModel = require('../../models/cart.model')
+const config = require('../../../config')
 const logger = require('../../utils/logger')
 
 class CarritosDaoMongoDb extends ContenedorMongoDb{
     constructor(){
-        super('carts', {
-            email: {
-                type: String,
-                required: true
-            },
-            address: {
-                type: String,
-                required: true
-            },
-            products: {
-                type: Array,
-                required: true,
-                min: 0
-            },
-            timestamp: {
-                type: Number,
-                required: true,
-                min: 0
-            },
-        })
+        super(config.DBURL, cartModel)
     }
     async getByEmail(email){
         try {
-            const found = await this.coll.findOne({email: email}, {__v: 0});
+            const found = await this.schema.findOne({email: email}, {__v: 0});
             return found
         } 
         catch (error) {

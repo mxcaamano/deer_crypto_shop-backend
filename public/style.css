@@ -314,6 +314,9 @@ body footer span {
 .deer-theme-dark a {
   color: #88dbc2;
 }
+.deer-theme-dark a:hover {
+  color: #2bf8bb;
+}
 .deer-theme-dark footer {
   background-color: black;
   padding-bottom: 2rem;

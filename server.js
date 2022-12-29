@@ -47,8 +47,8 @@ const methodOverride = require("method-override")
 app.use(methodOverride('_method'))
 
 //Contenedores
-const Contenedor = require('./src/containers/contenedor');
-const contenedorChats = new Contenedor('./src/db/messages.txt')
+const ContenedorArchivo = require('./src/containers/contenedorArchivo');
+const contenedorChats = new ContenedorArchivo('./src/db/messages.txt')
 
 //Server
 let server
