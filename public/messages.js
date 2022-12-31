@@ -5,10 +5,11 @@ const socket = io().connect()
 const renderMsgs = (data) => {
     let chatcontainer = document.querySelector('#chat-container')
     let html = data.map(msg => `<li class="p-2">
-      <img src="${msg.author.avatar}" alt="" width="50" height="50">
-      <strong style='color:blue'> ${msg.author.alias} </strong>
-      <em style='color:brown'> (${msg.author.id}) : </em>
-      <p class="fst-italic m-2" style='color:green'>${msg.text}</p> 
+      <img src="${msg.author.avatar}" alt="" width="60" height="60">
+      <strong style='color:#1ABC9C'> ${msg.author.alias} </strong>
+      <em style='color:#148F77'> (${msg.author.id})</em>
+      <em style='color:#148F77'>${msg.date} <strong>:</strong> </em>
+      <p class="fst-italic m-2" style='color:#117864'>${msg.text}</p> 
       </li>`)
     chatcontainer.innerHTML = html
   }

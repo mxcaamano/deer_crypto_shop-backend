@@ -1,10 +1,7 @@
-//DAO MongoDB
-// const ProductosDaoMongoDb = require('../daos/productos/ProductosDaoMongoDb')
-// const containerProds = new ProductosDaoMongoDb()
-
-const businessProducts = require('../business/businessProducts')
-const containerProds = businessProducts
-const logger = require('../utils/logger')
+const businessProducts = require('../business/businessProducts');
+const containerProds = businessProducts;
+const logger = require('../utils/logger');
+const crypto = require('crypto');
 
 // Variable de Permisos de Administrador
 const isAdmin = true
@@ -15,6 +12,17 @@ const getProducts = async (req, res) => {
     let state = null
     products ? state = true : state = false
     res.render('pages/products', {listExist: state, list: products} );
+    // products 
+    // ? res.json(products)
+    // : res.status(400).json({ error: 'No se encuentran productos' });
+}
+
+const getAdminProducts = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
+    const products = await containerProds.getAll();
+    let state = null
+    products ? state = true : state = false
+    res.render('pages/addproducts', {listExist: state, list: products} );
     // products 
     // ? res.json(products)
     // : res.status(400).json({ error: 'No se encuentran productos' });
@@ -37,7 +45,7 @@ const addProduct = async (req, res) => {
     if(isAdmin){
         const product = req.body;
         product.title && product.price && !isNaN(product.price) && product.description && product.thumbnail && product.code && product.stock && !isNaN(product.stock)
-        ? (product.price = parseFloat(product.price), product.timestamp = Date.now(), res.json(await containerProds.save(product)))
+        ? (product.price = parseFloat(product.price), product.timestamp = Date.now(), product.code = crypto.randomBytes(6).toString('hex'), res.json(await containerProds.save(product)))
         : res.status(400).json({ error: 'Se requiere titulo, precio(debe ser numero), descripción, url de imagen, codigo y stock(debe ser numero)' });
     }
     else{

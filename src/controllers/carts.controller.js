@@ -1,12 +1,9 @@
-//DAO MongoDB
-// const CarritosDaoMongoDb = require('../daos/carritos/CarritosDaoMongoDb');
-// const containerCarts = new CarritosDaoMongoDb();
-
-const businessCarts = require('../business/businessCarts')
-const containerCarts = businessCarts
+const businessCarts = require('../business/businessCarts');
+const containerCarts = businessCarts;
 const { containerProds } = require('../controllers/products.controller');
 const userModel = require('../models/user.model');
-const logger = require('../utils/logger')
+const logger = require('../utils/logger');
+const crypto = require('crypto');
 
 // Variable de Permisos de Administrador
 const isAdmin = true
@@ -114,7 +111,7 @@ const updateCart = async (req, res) => {
     console.log(product)
     if(product){
         product._id = id_prod
-        product.id = cart.products.length + 1
+        product.id = crypto.randomBytes(10).toString('hex');
         product.qty = parseInt(qty)
         cart.products.push(product)
         await containerCarts.updateById(cart.id, {products: cart.products, timestamp: cart.timestamp})
@@ -140,19 +137,34 @@ const updateCart = async (req, res) => {
 // }
 
 const deleteCartProduct = async (req, res) => {
-    const id = req.params.id
     const id_prod = req.params.id_prod
-    const cart = await containerCarts.getById(id)
-    const product = cart.products.find(p => p._id == id_prod)
+    const { id_cart } = req.body
+    const cart = await containerCarts.getById(id_cart)
+    const product = cart.products.find(p => p.id == id_prod)
     if(product){
     const productsArr = cart.products.filter(p => p !== product)
-    res.status(200).json({ message: 'Producto eliminado del carrito' })
-    res.json(await containerCarts.updateById(id, {timestamp: cart.timestamp, products: productsArr}))
+    await containerCarts.updateById(id_cart, {timestamp: cart.timestamp, products: productsArr})
+    res.redirect('/carrito')
     }
     else{
         res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
     }
 }
+
+// const deleteCartProduct = async (req, res) => {
+//     const id = req.params.id
+//     const id_prod = req.params.id_prod
+//     const cart = await containerCarts.getById(id)
+//     const product = cart.products.find(p => p._id == id_prod)
+//     if(product){
+//     const productsArr = cart.products.filter(p => p !== product)
+//     res.status(200).json({ message: 'Producto eliminado del carrito' })
+//     res.json(await containerCarts.updateById(id, {timestamp: cart.timestamp, products: productsArr}))
+//     }
+//     else{
+//         res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
+//     }
+// }
 
 const sendCart = async (req, res) => {
     const { id_cart, total } = req.body

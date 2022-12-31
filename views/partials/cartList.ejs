@@ -22,9 +22,12 @@
                           <h6 class="mb-0">Precio Unitario: <%= obj.price %> U$S <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h6>
                           <h5 class="mb-0 fs-5">Total: <%= obj.qty * obj.price %> U$S <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h5>
                           </div>
-                          <!-- <div class="col-md-1 col-lg-1 col-xl-1 text-end"> -->
-                          <!-- <button type="button" class="rounded-0 mb-1 py-1 btn btn-danger font-weight-bold text-white" onClick={() => context.removeItem(item)}>X</button> -->
-                          <!-- </div> -->
+                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <form action="/carrito/<%= obj.id %>?_method=DELETE" method="post">
+                              <input type="hidden" id="id_cart" name="id_cart" class="form-control" required value = <%= id_cart %>>
+                              <button type="submit" class="rounded-0 mb-1 py-1 btn btn-danger font-weight-bold text-white">X</button>
+                            </form>
+                          </div>
                       </div>
                       </div>
                   </div>
