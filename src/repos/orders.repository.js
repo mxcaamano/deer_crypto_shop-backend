@@ -1,12 +1,12 @@
-const MessagesDto = require('../dtos/messages.dto')
+const OrdersDto = require('../dtos/orders.dto')
 
-class MessagesRepository {
+class OrdersRepository {
     constructor(dao){
         this.dao = dao
     }
 
     save = async(obj) => {
-            let objDTO = new MessagesDto(obj)
+            let objDTO = new OrdersDto(obj)
             const created = await this.dao.save(objDTO) 
             return created;
     }
@@ -14,6 +14,11 @@ class MessagesRepository {
     getById = async(id) => {
             const found = await this.dao.getById(id);
             return found
+    }
+
+    updateById = async(id, props) => {
+            const updated = await this.dao.updateById(id, props)
+            return updated
     }
 
     getAll = async() => {
@@ -30,7 +35,7 @@ class MessagesRepository {
             const deleted = await this.dao.deleteAll()
             return deleted
     }
-
+    
 }
 
-module.exports = { MessagesRepository }
+module.exports = { OrdersRepository }

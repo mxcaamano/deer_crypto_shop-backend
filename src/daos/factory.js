@@ -12,11 +12,14 @@ const MessagesDaoArchivo = require('./mensajes/MessagesDaoArchivo.js');
 // const MessagesDaoMemoria = require('./mensajes/MessagesDaoMemoria.js');
 const MessagesDaoMongodb = require('./mensajes/MessagesDaoMongodb.js');
 
+const OrdersDaoMongodb = require('./orders/OrdersDaoMongodb.js');
+
 switch (process.env.DATABASE) {
     case 'mongodb':
         exports.productsFactory = ProductosDaoMongodb;
         exports.cartsFactory = CarritosDaoMongodb;
         exports.messagesFactory = MessagesDaoMongodb;
+        exports.ordersFactory = OrdersDaoMongodb;
         break
 
     case 'file':

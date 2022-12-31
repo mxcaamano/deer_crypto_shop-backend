@@ -15,6 +15,7 @@
 </head>
 <body class="deer-theme-dark">
 <%- include('../partials/header.ejs')%>
+<% if(exist){ %>
 <div class="container col-xxl-8 px-3 py-3 my-5 bordes-neon bg-black">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-3">
         <div class="col-10 col-sm-8 col-lg-6">
@@ -42,7 +43,9 @@
         <%- include('../partials/formEdit.ejs')%>
     </div>
 <% }%>
-
+    <%}else{%>
+    <%- include('../partials/404product.ejs')%>
+    <%}%>
 <%- include('../partials/footer.ejs')%>
 </body>
 </html>

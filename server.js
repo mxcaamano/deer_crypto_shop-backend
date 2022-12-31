@@ -23,7 +23,7 @@ app.use(
       saveUninitialized: true,
       store: MongoStore.create({ mongoUrl: process.env.DBURL, mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true} }),
       cookie: {
-        maxAge: 60000000,
+        maxAge: 6000000,
       },
     })
   );
