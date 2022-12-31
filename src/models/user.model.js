@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   address: String,
   age: String,
   phone: String,
-  imgURL: String
+  imgURL: String,
+  isAdmin: Boolean
 });
 
 const userModel = mongoose.model('User', userSchema);

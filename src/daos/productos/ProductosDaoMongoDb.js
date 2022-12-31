@@ -16,6 +16,15 @@ class ProductosDaoMongoDb extends ContenedorMongoDb{
             logger.error(error)
         }
     }
+    async getByCategory(category){
+        try {
+            const found = await (await this.schema.find({category: category}, {__v: 0}));
+            return found
+        } 
+        catch (error) {
+            logger.error(error)
+        }
+    }
 }
 
 module.exports = ProductosDaoMongoDb

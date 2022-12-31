@@ -15,8 +15,5 @@ module.exports = {
     },
     async deleteAll(){
         return await messages.deleteAll();
-    },
-    async getNative(id){
-        return await messages.getNative(id);
-    },
+    }
 }

@@ -23,7 +23,7 @@ app.use(
       saveUninitialized: true,
       store: MongoStore.create({ mongoUrl: process.env.DBURL, mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true} }),
       cookie: {
-        maxAge: 100000,
+        maxAge: 60000000,
       },
     })
   );
@@ -71,8 +71,8 @@ app.use(passport.session())
 //Rutas
 const routes = require('./src/routes/index.router');
 const methodOverride = require("method-override");
-app.use(routes);
 app.use(methodOverride('_method'));
+app.use(routes);
 
 //WebSockets
 const io = new IOServer(server)

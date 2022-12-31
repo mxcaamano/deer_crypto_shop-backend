@@ -22,4 +22,7 @@ module.exports = {
     async getNative(id){
         return await products.getNative(id);
     },
+    async getByCategory(category){
+        return await products.getByCategory(category);
+    },
 }

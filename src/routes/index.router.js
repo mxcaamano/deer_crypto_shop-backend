@@ -6,7 +6,6 @@ const routerMsgs = require('./messages.router');
 const routerLogin = require('./login.router');
 const routerLogout = require('./logout.router');
 const routerSignUp = require('./signUp.router');
-// const { routerInfo } = require('./info.router');
 const routerProfile = require('./profile.router');
 const logger = require('../utils/logger');
 const { authMiddleware } = require('../middlewares/middlewares');
@@ -21,7 +20,6 @@ router.use('/chat', authMiddleware, routerMsgs);
 router.use('/login', routerLogin);
 router.use('/logout', routerLogout);
 router.use('/signUp', routerSignUp);
-// router.use('/info', authMiddleware, routerInfo);
 router.use('/profile', authMiddleware, routerProfile);
 router.get("*", authMiddleware, (req, res) => {
   logger.warn(`La ruta ${req.path} ${req.method} no está implementada`);

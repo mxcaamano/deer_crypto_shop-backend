@@ -1,12 +1,27 @@
 <div class="container my-3">
-    <form onsubmit="return addProduct(this)">
-      <h2 class="fs-4">Añadir Producto</h2>
+    <form action="/productos" method="post" class="my-5">
+      <h2 class="fs-4">Añadir Producto (Admin)</h2>
       <label class="h5 my-2" for="title">Titulo</label>
       <input class="form-control w-25" type="text" id="title" name="title" placeholder="Titulo" required>
       <label class="h5 my-2" for="price">Precio</label>
-      <input class="form-control w-25" type="text" id="price" name="price" placeholder="Precio" required>
+      <input class="form-control w-25" type="number" id="price" name="price" placeholder="Precio" step=".01" min="0.01" required>
+      <label class="h5 my-2" for="category">Category</label>
+      <input list="category" class="form-control w-25" name="category" placeholder="Seleccione Categoria" required>
+        <datalist id="category">
+          <option value="GPUs">
+          <option value="Fuentes">
+          <option value="Motherboards">
+          <option value="Coolers">
+          <option value="Risers">
+          <option value="Rigs">
+          <option value="ASICs">
+        </datalist>
+      <label class="h5 my-2" for="description">Descripción</label>
+      <input class="form-control w-25" type="text" id="description" name="description" placeholder="Descripción" required>
       <label class="h5 my-2" for="thumbnail">URL de imagen</label>
-      <input class="form-control mb-3 w-25" type="text" id="thumbnail" name="thumbnail" placeholder="URL" required>
-      <input class="btn-view" type="submit" value="Añadir" class="button">
+      <input class="form-control w-25" type="text" id="thumbnail" name="thumbnail" placeholder="URL" required>
+      <label class="h5 my-2" for="stock">Stock</label>
+      <input class="form-control w-25" type="number" id="stock" name="stock" placeholder="Stock" min="1" required>
+      <input class="p-2 btn-view mt-3" type="submit" value="Añadir" class="button">
     </form>
 </div>

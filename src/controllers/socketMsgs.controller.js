@@ -1,3 +1,5 @@
+// const businessMessages = require('../business/businessMessages');
+// const containerChats = businessChats;
 const messagesModel = require('../models/messages.model');
 const logger = require('../utils/logger');
 const formatDate = require('../utils/formatDate')
@@ -5,6 +7,7 @@ const formatDate = require('../utils/formatDate')
 module.exports = 
 async socket =>  {
     let chat = await messagesModel.find();
+    // let chat = await containerChats.getAll();    
 
     logger.info('New user connected: ', socket.id)
 

@@ -1,35 +1,48 @@
 <div class="container py-2">
-    <h2 class="my-3">Productos</h2>
-    <div className="album py-3 mb-5 my-3">
-        <div className="container">
+    <h2 class="my-3"><%= category %></h2>
+    <div class="album py-3 mb-5 my-3">
+        <div class="container">
         <% if(listExist){ %>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3" id="products">
-            <% list.forEach(obj => { %>
-                <form action="/carrito?_method=PUT" method="post" class="d-flex align-items-center flex-column m-3" style="width: 22rem;">
+            <% list.forEach(item => { %>
+                <!-- <form action="/carrito?_method=PUT" method="post" class="d-flex align-items-center flex-column m-3" style="width: 22rem;"> -->
                 <div class="col">
-                <div class="card bordes-neon bg-black pb-2">
-                    <img src=<%= obj.thumbnail %> alt="" class="bg-white productIMG" width="100%" height="225">
+                <div class="card bordes-neon bg-black pb-2 m-3">
+                    <img src=<%= item.thumbnail %> alt="" class="bg-white productIMG" width="100%" height="225">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                        <small class="h6">ID: <%= obj.id %></small>
+                        <small class="h6">ID: <%= item.id %></small>
                     </div>
-                    <h5 class="card-text fs-5"><a href="/productos/<%= obj.id %>"><%= obj.title %></a></h5>
-                    <p class="card-text h5">Precio: <%= obj.price %> U$S</p>
-                    <input type="hidden" id="id_prod" name="id_prod" class="form-control" required value = <%= obj.id %>>
-                    <input type="number" id="qty" name="qty" class="w-25 form-control mb-2" min=1 max=<%= obj.stock %> value=0>
-                    <button type="submit" class="p-2 btn-view">Añadir al Carrito</button>
+                    <h5 class="card-text fs-5"><a href="/productos/<%= item.id %>"><%= item.title %></a></h5>
+                    <p class="card-text h5">Precio: <%= item.price %> U$S</p>
+                    <span>Disponibles <%= item.stock %></span>
+                    <form action="/carrito?_method=PUT" method="post">
+                        <input type="hidden" id="id_prod" name="id_prod" class="form-control" required value = <%= item.id %>>
+                        <input type="number" id="qty" name="qty" class="w-25 form-control my-2" min=1 max=<%= item.stock %> value=0>
+                        <button type="submit" class="p-2 btn-view">Añadir al Carrito</button>
+                    </form>
+                    <% if(isAdmin){ %>
+                    <form action="/productos/<%= item.id %>?_method=DELETE" method="post">
+                        <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white m-2">Eliminar</button>
+                    </form>
+                    <% }%>
                     </div>
                 </div>
                 </div>
-                </form>
+                <!-- </form> -->
             <% })%>
             </div>
+            <% if(isAdmin){ %>
+                <form action="/productos?_method=DELETE" method="post">
+                    <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white m-2">Eliminar Todos los productos</button>
+                </form>
+                <% }%>
         </div>
     </div>
         <%}else{%>
-            <div className="card-body cart">
-                <div className="col-sm-12 empty-cart-cls text-center">
-                <h4>No hay productos!</h4>
+            <div class="card-body cart">
+                <div class="col-sm-12 empty-cart-cls text-center">
+                <h4 class="fs-4">No hay productos 😕! Proximamente se añadiran productos a esta categoria 🤑</h4>
                 </div>
             </div>
         <%}%>

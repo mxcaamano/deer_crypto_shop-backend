@@ -16,6 +16,9 @@
 <body class="deer-theme-dark">
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/productsList.ejs')%>
+<% if(isAdmin){ %>
+    <%- include('../partials/formAdd.ejs')%>
+<% }%>
 <%- include('../partials/footer.ejs')%>
 </body>
 </html>

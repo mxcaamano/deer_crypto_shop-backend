@@ -1,0 +1,32 @@
+<div class="container my-3">
+    <form action="/productos/<%= item.id %>?_method=PUT" method="post">
+      <h2 class="fs-4">Modificar | Eliminar Producto</h2>
+      <label class="h5 my-2" for="title">Titulo</label>
+      <input class="form-control w-25" type="text" id="title" name="title" placeholder="Titulo" required value="<%= item.title %>">
+      <label class="h5 my-2" for="price">Precio</label>
+      <input class="form-control w-25" type="number" id="price" name="price" placeholder="Precio" step=".01" min="0.01" required value="<%= item.price %>">
+      <label class="h5 my-2" for="category">Category</label>
+      <input list="category" class="form-control w-25" name="category" placeholder="Seleccione Categoria" required value="<%= item.category %>">
+        <datalist id="category">
+          <option value="GPUs">
+          <option value="Fuentes">
+          <option value="Motherboards">
+          <option value="Coolers">
+          <option value="Risers">
+          <option value="Rigs">
+          <option value="ASICs">
+        </datalist>
+      <label class="h5 my-2" for="description">Descripción</label>
+      <input class="form-control w-25" type="text" id="description" name="description" placeholder="Descripción" required value="<%= item.description %>">
+      <label class="h5 my-2" for="thumbnail">URL de imagen</label>
+      <input class="form-control w-25" type="text" id="thumbnail" name="thumbnail" placeholder="URL" required value="<%= item.thumbnail %>">
+      <label class="h5 my-2" for="thumbnail">Codigo</label>
+      <input class="form-control w-25" type="text" id="code" name="code" placeholder="Codigo" required value="<%= item.code %>">
+      <label class="h5 my-2" for="stock">Stock</label>
+      <input class="form-control w-25" type="number" id="stock" name="stock" placeholder="Stock" min="1" required value="<%= item.stock %>">
+      <input class="rounded-0 btn btn-success font-weight-bold text-white mt-3" type="submit" value="Modificar" class="button">
+    </form>
+    <form action="/productos/<%= item.id %>?_method=DELETE" method="post">
+      <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white mt-3">Eliminar</button>
+    </form>
+</div>

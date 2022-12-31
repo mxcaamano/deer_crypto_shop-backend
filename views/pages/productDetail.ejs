@@ -23,9 +23,10 @@
         <div class="col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3"><%= item.title %></h1>
             <h2 class="display-7 fw-bold lh-1 mb-3">Precio: <%= item.price %> U$S </h2>
+            <span>Codigo: <%= item.code %></span>
             <p class="lead">ID: <%= item.id %></p>
-            <p class="lead">Disponibles: <%= item.stock %></p>
             <p class="lead"><%= item.description %></p>
+            <p class="lead">Disponibles: <%= item.stock %></p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <form action="/carrito?_method=PUT" method="post" class="" style="width: 22rem;">
                     <input type="hidden" id="id_prod" name="id_prod" class="form-control" required value = <%= item.id %>>
@@ -36,6 +37,12 @@
         </div>
     </div>
 </div>
+<% if(isAdmin){ %>
+    <div class="container">
+        <%- include('../partials/formEdit.ejs')%>
+    </div>
+<% }%>
+
 <%- include('../partials/footer.ejs')%>
 </body>
 </html>

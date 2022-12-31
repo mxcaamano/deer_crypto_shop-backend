@@ -24,7 +24,7 @@ routerSignUp.post('/', upload.single('image'), userMiddleware, async function (r
     }
     const filename = await fileUpload.save(req.file.buffer);
     // return res.status(200).json({ name: filename });
-    const user = { email, password: createHash(password), name, address, age, phone, imgURL: imagePath.slice(8) + '/' + filename };
+    const user = { email, password: createHash(password), name, address, age, phone, imgURL: imagePath.slice(8) + '/' + filename, isAdmin: false };
     const User = new userModel(user);
     await User.save();
     const mailOptions =  {

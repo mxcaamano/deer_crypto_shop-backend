@@ -39,7 +39,12 @@ class ProductsRepository {
     getNative = async(id) => {
         const found = await this.dao.getNative(id);
         return found
-}
+    }
+    
+    getByCategory = async(category) => {
+        const found = await this.dao.getByCategory(category);
+        return found
+    }
 }
 
 module.exports = { ProductsRepository }
