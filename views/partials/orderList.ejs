@@ -4,7 +4,10 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
         </div>
         <% if(list.length > 0){ %>
-          <h3 class="fw-normal mb-0">Tu Carrito</h3>
+          <h3 class="fw-normal mb-0">Orden de compra #<%= order.orderN %></h3></br>
+          <span><strong>Email: </strong><%= order.buyer %></span></br>
+          <span><strong>Fecha y Hora: </strong><%= order.date %></span></br>
+          <span><strong>Estado: </strong><%= order.state %></span></br>
             <% list.forEach(obj => { %>
                   <div class="card bg-black my-5 bordes-neon p-3">
                       <div class="card-body p-4">
@@ -22,18 +25,10 @@
                           <h6 class="mb-0">Precio Unitario: <%= obj.price %> U$S <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h6>
                           <h5 class="mb-0 fs-5">Total: <%= obj.qty * obj.price %> U$S <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h5>
                           </div>
-                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                            <form action="/carrito/<%= obj.id %>?_method=DELETE" method="post">
-                              <input type="hidden" id="id_cart" name="id_cart" class="form-control" required value = <%= id_cart %>>
-                              <button type="submit" class="rounded-0 mb-1 py-1 btn btn-danger font-weight-bold text-white">X</button>
-                            </form>
-                          </div>
                       </div>
                       </div>
                   </div>
                 <% })%>
-        <%}%>
-            <% if(list.length > 0){ %>
             <div class="d-flex justify-content-center">
               <div class="col-md-4 order-md-2 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -43,29 +38,40 @@
                 <ul class="bg-black list-group mb-3 bordes-neon mt-4">
                   <li class="bg-black list-group-item d-flex justify-content-between">
                     <span class='fs-5'>Total (U$S) / <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> / <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></span>
-                    <strong class='fs-5' id="total"><%= total %></strong>
+                    <strong class='fs-5' id="total"><%= order.total %></strong>
                   </li>
                 </ul>
-                  <div class="btn-group my-2">
-                  <form action="/carrito" method="post" class="d-flex align-items-center flex-column" style="width: 10rem;">
-                    <input type="hidden" id="id_cart" name="id_cart" class="form-control" required value = <%= id_cart %>>
-                    <input type="hidden" id="total" name="total" class="form-control" required value = <%= total %>>
-                    <button type="submit" class="rounded-0 btn btn-success font-weight-bold text-white m-2">Enviar Pedido</button>
-                  </form>
-                  <form action="?_method=DELETE" method="post" class="d-flex align-items-center flex-column" style="width: 10rem;">
-                    <input type="hidden" id="id_cart" name="id_cart" class="form-control" required value = <%= id_cart %>>
-                    <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white m-2">Vaciar Carrito</button>
-                  </form>
-                  </div>
               </div>
             </div>
+            <% if(isAdmin){ %>
+            <div class="container my-3">
+              <form action="?_method=PUT" method="post" class="my-3">
+                <h2 class="fs-4">Modificar estado | Eliminar Orden</h2>
+                <label class="h5 my-2" for="state">Estado</label>
+                <input list="state" class="form-control w-25" name="state" placeholder="Seleccione Estado" required>
+                  <datalist id="state">
+                    <option value="Generada">
+                    <option value="Confirmada">
+                    <option value="Pendiente de pago">
+                    <option value="En proceso de envío">
+                    <option value="Enviada">
+                    <option value="Recibida por el cliente">
+                    <option value="Suspendida">
+                    <option value="Cancelada">
+                  </datalist>
+                <input class="rounded-0 btn btn-success font-weight-bold text-white mt-3" type="submit" value="Modificar" class="button">
+              </form>
+                <form action="?_method=DELETE" method="post">
+                  <input type="hidden" id="id_cart" name="id_cart" class="form-control" required value = <%= id_cart %>>
+                  <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white">Eliminar</button>
+                </form>
+          </div>
+          <%}%>
         <%}else{%>
             <div class="card-body cart">
                 <div class="col-sm-12 empty-cart-cls text-center">
-                    <img class='mb-5 img-fluid mr-2' src="/assets/img/logos/cart.png" width="130" height="120" alt='loading-icon'/>
-                    <h3><strong>Tu Carrito está vacío !</strong></h3>
-                    <h4 class='mb-3'>🤑 Ingresa a la tienda para añadir productos 🤑</h4>
-                    <a href="/productos"><button type="button" class="px-3 btn-view fs-5">Tienda</button></a>
+                    <h3><strong>Esta orden está vacia</strong></h3>
+                    <a href="javascript:window.history.back();"><button type="button" class="px-3 btn-view fs-5">Volver</button></a>
                 </div>
             </div>
         <%}%>

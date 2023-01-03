@@ -18,5 +18,8 @@ module.exports = {
     },
     async deleteAll(){
         return await orders.deleteAll();
+    },
+    async getByEmail(email){
+        return await orders.getByEmail(email);
     }
 }

@@ -1,12 +1,11 @@
 const { Router } = require("express")
-const { createCart, deleteCart, getCart, updateCart, deleteCartProduct, sendCart } = require("../controllers/carts.controller")
+const { getOrders, getOrderById, updateOrder, deleteOrder } = require("../controllers/orders.controller")
 
-const routerCarts = Router()
+const routerOrders = Router()
 
-routerCarts.delete('/', deleteCart)
-routerCarts.get('/', getCart, createCart)
-routerCarts.put('/', updateCart)
-routerCarts.delete('/:id_prod', deleteCartProduct)
-routerCarts.post('/', sendCart)
+routerOrders.get('/', getOrders)
+routerOrders.get('/:id', getOrderById)
+routerOrders.put('/:id', updateOrder)
+routerOrders.delete('/:id', deleteOrder)
 
-module.exports = routerCarts
+module.exports = routerOrders

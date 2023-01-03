@@ -7,6 +7,7 @@ const routerLogin = require('./login.router');
 const routerLogout = require('./logout.router');
 const routerSignUp = require('./signUp.router');
 const routerProfile = require('./profile.router');
+const routerOrders = require('./orders.router');
 const logger = require('../utils/logger');
 const { authMiddleware } = require('../middlewares/middlewares');
 
@@ -21,6 +22,7 @@ router.use('/login', routerLogin);
 router.use('/logout', routerLogout);
 router.use('/signUp', routerSignUp);
 router.use('/profile', authMiddleware, routerProfile);
+router.use('/ordenes', authMiddleware, routerOrders);
 router.get("*", authMiddleware, (req, res) => {
   logger.warn(`La ruta ${req.path} ${req.method} no está implementada`);
   res.render('pages/404error')

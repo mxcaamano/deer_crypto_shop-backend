@@ -1,0 +1,36 @@
+<div class="container py-2">
+    <h2 class="my-3">Órdenes de compra</h2>
+    <div class="album py-3 mb-5 my-3">
+        <div class="container">
+        <% if(listExist){ %>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3" id="products">
+            <% list.forEach(order => { %>
+                <div class="card-body">
+                    <h4 class="card-text fs-4">Orden #<%= order.orderN %></h4>
+                    <p class="card-text my-1">Fecha y hora: <%= order.date %></p>
+                    <p class="card-text my-1">Comprador: <%= order.buyer %></p>
+                    <p class="card-text my-1">Estado: <%= order.state %></p>
+                    <p class="card-text my-1">Items: <a href="/ordenes/<%= order.id %>">Ver</a></p>
+                    <p class="card-text fs-5">Total: <%= order.total %> U$S</p>
+                    <% if(isAdmin){ %>
+                    <form action="/ordenes/<%= order.id %>?_method=DELETE" method="post">
+                        <button type="submit" class="rounded-0 btn btn-danger font-weight-bold text-white m-2">Eliminar</button>
+                    </form>
+                    <% }%>
+                </div>
+            <% })%>
+            </div>
+        </div>
+    </div>
+        <%}else{%>
+            <div class="card-body cart">
+                <div class="col-sm-12 empty-cart-cls text-center">
+                    <% if(isAdmin){ %>
+                        <h4 class="fs-4">No hay órdenes de compra!</h4>
+                    <%}else{%>    
+                        <h4 class="fs-4">No hay órdenes de compra!, ingresa a la <a href="/productos">tienda</a> para ordenar productos! 🤑</h4>
+                        <%}%>
+                </div>
+            </div>
+        <%}%>
+</div>    

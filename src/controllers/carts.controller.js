@@ -172,7 +172,7 @@ const sendCart = async (req, res) => {
     const { id_cart, total } = req.body
     const user = await userModel.findOne({_id: req.session.passport.user});
     const cart = await businessCarts.getById(id_cart)
-    const order = { items: cart.products, total: total, date: formatDate(new Date()), state: 'generated', buyer: cart.email }
+    const order = { items: cart.products, total: total, date: formatDate(new Date()), state: 'Generada', buyer: cart.email }
     let arrayItems = "";
     let arrayItemsMsg = "";
     let n;
@@ -194,7 +194,7 @@ const sendCart = async (req, res) => {
     const mailOptions =  {
         from: `${user.email}`,
         to: mail,
-        subject: `Nuevo pedido de: ${user.name}`,
+        subject: `Nueva orden de compra de: ${user.name}`,
         html: `<div style="background-color:black;"><br>
                 <h1 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Pedido de ${user.name}:</h1>
                 <ul>${arrayItems}</ul>

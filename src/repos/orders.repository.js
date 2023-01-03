@@ -36,6 +36,10 @@ class OrdersRepository {
             return deleted
     }
     
+    getByEmail = async(email) => {
+        const found = await this.dao.getByEmail(email);
+        return found
+    }
 }
 
 module.exports = { OrdersRepository }

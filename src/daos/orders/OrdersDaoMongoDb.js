@@ -6,6 +6,15 @@ class OrdersDaoMongoDb extends ContenedorMongoDb{
     constructor(){
         super(config.DBURL, ordersModel)
     }
+    async getByEmail(email){
+        try {
+            const found = await this.schema.find({buyer: email}, {__v: 0});
+            return found
+        } 
+        catch (error) {
+            logger.error(error)
+        }
+    }
 }
 
 module.exports = OrdersDaoMongoDb
