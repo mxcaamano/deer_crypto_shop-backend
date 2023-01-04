@@ -23,37 +23,43 @@ const getOrderById = async (req, res) => {
             res.render('pages/order', {list: order.items, order: order, qtyItems: qtyItems, id_cart: order.id, isAdmin: user.isAdmin});
         }
         else{
-            res.render('pages/systemMessage', { message: 'La orden que intentas observar no corresponde a tu usuario', success: false, href: '/ordenes' });
+            res.render('pages/systemMessage', { message: 'La orden que intentas observar no corresponde a tu usuario', success: false, href: 'ordenes' });
         }
     }
     else{
-        res.render('pages/systemMessage', { message: 'La orden que buscas no existe', success: false, href: '/ordenes' });
+        res.render('pages/systemMessage', { message: 'La orden que buscas no existe', success: false, href: 'ordenes' });
     }
 }
 
 const updateOrder = async (req, res) => {
+    const user = await userModel.findOne({_id: req.session.passport.user});
     const id = req.params.id;
-    const { state } = req.body;
-    const states = ['Generada', 'Suspendida', 'Cancelada', 'Confirmada', 'En proceso de envio', 'Enviada', 'Pendiente de pago', 'Recibida por el cliente']
-    if(state && state == states.find(e => e.toUpperCase() === state.toUpperCase())){
-        await businessOrders.updateById(id, {state: state})
-        res.render('pages/systemMessage', { message: 'Orden modificada', success: true, href: '/ordenes' });
+    if(user.isAdmin){
+        const { state } = req.body;
+        const states = ['Generada', 'Suspendida', 'Cancelada', 'Confirmada', 'En proceso de envio', 'Enviada', 'Pendiente de pago', 'Recibida por el cliente']
+        if(state && state == states.find(e => e.toUpperCase() === state.toUpperCase())){
+            await businessOrders.updateById(id, {state: state})
+            res.render('pages/systemMessage', { message: 'Orden modificada', success: true, href: 'ordenes' });
+        }
+        else{
+            res.render('pages/systemMessage', { message: 'Ingrese correctamente el campo de estado', success: false, href: `ordenes/${id}` });
+        }
     }
     else{
-        res.render('pages/systemMessage', { message: 'Ingrese correctamente el campo de estado', success: false, href: `/ordenes/${id}` });
+        res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `ordenes/${id}`});
     }
 }
 
 const deleteOrder = async (req, res) => {
     const user = await userModel.findOne({_id: req.session.passport.user});
     const id = req.params.id;
-    if(user.isAdmin){
-        await businessOrders.deleteById(id);
-        res.render('pages/systemMessage', { message: 'Orden eliminada', success: true, href: '/ordenes' });
-    }
-    else{
-        res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: '/ordenes' });
-    }
+        if(user.isAdmin){
+            await businessOrders.deleteById(id);
+            res.render('pages/systemMessage', { message: 'Orden eliminada', success: true, href: 'ordenes' });
+        }
+        else{
+            res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: 'ordenes' });
+        }
 }
 
 module.exports = { getOrders, getOrderById, updateOrder, deleteOrder }

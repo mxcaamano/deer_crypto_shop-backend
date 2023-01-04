@@ -11,7 +11,7 @@ const routerOrders = require('./orders.router');
 const logger = require('../utils/logger');
 const { authMiddleware } = require('../middlewares/middlewares');
 
-router.use('/productos', authMiddleware, routerProducts);
+router.use('/productos', routerProducts);
 router.get('/', (req, res) => {
   logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
   res.redirect('/productos')

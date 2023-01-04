@@ -71,6 +71,7 @@ class ContenedorMongoDb {
             const deleted = await this.schema.deleteOne({_id: id})
             if (deleted.deletedCount > 0){
                 logger.info('Objeto eliminado');
+                return deleted.deletedCount
             }
             else{
                 logger.info("No existe el objeto");
@@ -85,9 +86,13 @@ class ContenedorMongoDb {
     async deleteAll(){
         try {
             const deleted = await this.schema.deleteMany()
-            deleted.deletedCount 
-            ? logger.info(`${deleted.deletedCount} objetos eliminados`) 
-            : logger.info("No hay objetos para eliminar.")    
+            if (deleted.deletedCount > 0){
+                logger.info(`${deleted.deletedCount} objetos eliminados`)
+                return deleted.deletedCount
+            }
+            else{
+                logger.info("No hay objetos para eliminar.") 
+            }
         } 
         catch (error) {
             logger.error(error)
