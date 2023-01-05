@@ -14,18 +14,15 @@ const renderMsgs = (data) => {
     chatcontainer.innerHTML = html
   }
 
-socket.on('arrMsg', data => {
+socket.on('getMsgs', data => {
     renderMsgs(data.chat)
   })
   
   const addMessage = (e) => {
-    let name = document.getElementById('name').value
-    let email = document.getElementById('email').value
-    let text = document.getElementById('text').value
-    let avatar = document.getElementById('avatar').value
-    const chatMsg = {author:{id: email, alias: name, avatar: avatar}, text: text}
-    if(chatMsg.author.id && chatMsg.author.alias && chatMsg.author.avatar && chatMsg.text){
-        socket.emit('add-msg', chatMsg)
+    const text = document.getElementById('text').value
+    const sessionId = document.getElementById('sessionId').value
+    if(text && sessionId){
+        socket.emit('postMsg', {text: text, sessionId: sessionId})
         return false
     }
     else{

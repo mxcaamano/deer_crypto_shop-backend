@@ -31,6 +31,10 @@ class MessagesRepository {
             return deleted
     }
 
+    getByEmail = async(email) => {
+        const found = await this.dao.getByEmail(email);
+        return found
+    }
 }
 
 module.exports = { MessagesRepository }

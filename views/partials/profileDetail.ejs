@@ -1,7 +1,12 @@
 <div class="container py-3">
   <h2>Perfil 🙎‍♂️</h2>
   <div class="container my-3">
-        <img class="mb-3" src=<%= imgURL %> alt="" width="80" height="80"><br>
+        <div class="btn-group">
+          <img class="mb-3" src=<%= imgURL %> alt="" width="80" height="80">
+          <a href="/carrito"><button type="submit" class="mx-4 p-2 btn-view">Carrito</button></a>
+          <a href="/chat/mismensajes"><button type="submit" class="mx-4 p-2 btn-view">Mensajes</button></a>
+          <a href="/ordenes"><button type="submit" class="mx-4 p-2 btn-view">Órdenes</button></a>
+        </div></br>
         <span>Nombre</span>
         <span class="form-control w-25 p-1 mb-3 mt-1"><%= name %></span>
         <span>Correo Electrónico</span>
@@ -12,6 +17,5 @@
         <span class="form-control w-25 p-1 mb-3 mt-1"><%= phone %></span>
         <span>Edad</span>
         <span class="form-control w-25 p-1 mb-3 mt-1"><%= age %></span><br>
-        <a href="/carrito"><button type="submit" class="mx-4 p-2 btn-view">Carrito</button></a>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<div class="container py-3">
+    <h2>Tus mensajes</h2>
+    <h4>Aqui puedes visualizar tus mensajes enviados</h4>
+    <div class="container my-3">
+        <% if(listExist){ %>
+        <div class="container m-1 my-3 w-75 bg-white form-control">
+          <ul class="list-unstyled p-2" id="chat-container">
+            <% list.forEach(msg => { %>
+            <li class="p-2">
+                <img src=<%= msg.author.avatar %> alt="" width="60" height="60">
+                <strong style='color:#1ABC9C'> <%= msg.author.alias %> </strong>
+                <em style='color:#148F77'> (<%= msg.author.id %>)</em>
+                <em style='color:#148F77'> <%= msg.date %> <strong>:</strong> </em>
+                <p class="fst-italic m-2" style='color:#117864'><%= msg.text %></p> 
+            </li>
+            <% })%>
+          </ul>
+        </div>
+        <%}else{%>
+            <div class="card-body cart mt-5">
+                <div class="col-sm-12 empty-cart-cls text-center">
+                <h4 class="fs-4">Aquí no hay mensajes 🤔</h4>
+                </div>
+            </div>
+        <%}%>
+    </div>
+</div>

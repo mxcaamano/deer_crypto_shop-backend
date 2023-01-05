@@ -68,13 +68,13 @@ app.use(express.urlencoded({extended: false}));
 app.use(passport.initialize())
 app.use(passport.session())
 
+//WebSockets
+const chat = require('./src/routes/messages.sockets.router');
+const io = new IOServer(server)
+io.on('connection',(socket) => chat(socket,io))
+
 //Rutas
 const routes = require('./src/routes/index.router');
 const methodOverride = require("method-override");
 app.use(methodOverride('_method'));
 app.use(routes);
-
-//WebSockets
-const io = new IOServer(server)
-const socketMsgs = require('./src/controllers/socketMsgs.controller');
-io.on('connection', socketMsgs);

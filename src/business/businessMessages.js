@@ -15,5 +15,8 @@ module.exports = {
     },
     async deleteAll(){
         return await messages.deleteAll();
+    },
+    async getByEmail(email){
+        return await messages.getByEmail(email);
     }
 }
