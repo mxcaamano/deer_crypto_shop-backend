@@ -2,24 +2,24 @@
 
 const ProductosDaoArchivo = require('./productos/ProductosDaoArchivo.js');
 // const ProductosDaoMemoria = require('./productos/ProductosDaoMemoria.js');
-const ProductosDaoMongodb = require('./productos/ProductosDaoMongodb.js');
+const ProductosDaoMongoDb = require('./productos/ProductosDaoMongoDb.js');
 
 const CarritosDaoArchivo = require('./carritos/CarritosDaoArchivo.js');
 // const CarritosDaoMemoria = require('./carritos/CarritosDaoMemoria.js');
-const CarritosDaoMongodb = require('./carritos/CarritosDaoMongodb.js');
+const CarritosDaoMongoDb = require('./carritos/CarritosDaoMongoDb.js');
 
 const MessagesDaoArchivo = require('./mensajes/MessagesDaoArchivo.js');
 // const MessagesDaoMemoria = require('./mensajes/MessagesDaoMemoria.js');
-const MessagesDaoMongodb = require('./mensajes/MessagesDaoMongodb.js');
+const MessagesDaoMongoDb = require('./mensajes/MessagesDaoMongoDb.js');
 
-const OrdersDaoMongodb = require('./orders/OrdersDaoMongodb.js');
+const OrdersDaoMongoDb = require('./orders/OrdersDaoMongoDb.js');
 
 switch (process.env.DATABASE) {
     case 'mongodb':
-        exports.productsFactory = ProductosDaoMongodb;
-        exports.cartsFactory = CarritosDaoMongodb;
-        exports.messagesFactory = MessagesDaoMongodb;
-        exports.ordersFactory = OrdersDaoMongodb;
+        exports.productsFactory = ProductosDaoMongoDb;
+        exports.cartsFactory = CarritosDaoMongoDb;
+        exports.messagesFactory = MessagesDaoMongoDb;
+        exports.ordersFactory = OrdersDaoMongoDb;
         break
 
     case 'file':
