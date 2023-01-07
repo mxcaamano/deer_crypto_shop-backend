@@ -6,5 +6,6 @@ module.exports = {
     DBURL: process.env.DBURL || 'mongodb+srv://admin:admin@cluster0.dbaqnvv.mongodb.net/ecommerce?retryWrites=true&w=majority',
     SECRET: process.env.SECRET || '0303456',
     PORT: args.argv.port,
-    MODE: args.argv.mode
+    MODE: args.argv.mode,
+    ENV: process.env.ENV || 'production'
 }

@@ -6,15 +6,11 @@ const logger = require('../utils/logger');
 const crypto = require('crypto');
 const formatDate = require('../utils/formatDate')
 
-// Variable de Permisos de Administrador
-const isAdmin = true
-
 //nodemailer
-const mail = 'shirley99@ethereal.email'
-const transporter = require('../utils/nodemailer.config')
+const { transporter, mail } = require('../utils/nodemailer.config')
 
 //twilio
-// const sendMsg = require('../utils/twilio.config')
+const sendMsg = require('../utils/twilio.config')
 
 const createCart = async (req, res) => {
     const user = await businessUsers.getById(req.session.passport.user);
@@ -123,20 +119,22 @@ const sendCart = async (req, res) => {
         Precio Unitario: ${cart.products[n].price} U$S
         Total Producto: ${cart.products[n].qty * cart.products[n].price} U$S\n`;
         }
+        const createdOrder = await businessOrders.save(order)
         const mailOptions =  {
             from: `${user.email}`,
             to: mail,
-            subject: `Nueva orden de compra de: ${user.name}`,
+            subject: `Orden de compra #${createdOrder.orderN} - ${user.name}`,
             html: `<div style="background-color:black;"><br>
                     <h1 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Pedido de ${user.name}:</h1>
+                    <h2 style="color: #2bf8bb;">&nbsp&nbsp&nbsp Orden #${createdOrder.orderN}</h2>
+                    <h4 style="color: #2bf8bb;">&nbsp&nbsp&nbsp ID: ${createdOrder.id}</h4>
                     <ul>${arrayItems}</ul>
                     <h2 style="color: #2bf8bb;">&nbsp&nbsp&nbspTotal: ${total} U$S</h2><br>
                     </div><br>`
         }
-        // await transporter.sendMail(mailOptions)
-        // await sendMsg(`Hola ${user.name}!, tu pedido N° ${cart.timestamp} fue recibido y se encuentra en proceso!`,'+14793365162',process.env.PHONE)
-        // await sendMsg(`Pedido de ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
-        await businessOrders.save(order)
+        await transporter.sendMail(mailOptions)
+        await sendMsg(`Hola ${user.name}!, tu orden #${createdOrder.orderN} fue generada, solo queda esperar novedades!`,'+14793365162',process.env.PHONE)
+        await sendMsg(`Orden de compra #${createdOrder.orderN}\n ID: ${createdOrder.id} \n Comprador: ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
         await businessCarts.deleteById(id_cart)
         res.render('pages/systemMessage', { message: `Se ha enviado tu orden de compra, podés consultar su estado en /ordenes`, success: true, href: 'productos' });
         // res.status(200).json({ message: 'Pedido enviado' })

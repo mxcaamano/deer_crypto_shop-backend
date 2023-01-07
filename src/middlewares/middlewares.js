@@ -1,4 +1,3 @@
-// const businessUsers = require('../business/businessUsers');
 const businessUsers = require('../business/businessUsers')
 
 const userMiddleware = async (req, res, next) => {

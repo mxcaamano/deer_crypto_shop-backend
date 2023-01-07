@@ -36,7 +36,7 @@ class ContenedorMongoDb {
         try {
             const found = await this.schema.findOne({_id: id}, {__v: 0});
             return found
-            ? (logger.info(found), found)
+            ? found
             : logger.info("No se encuentra el objeto")
         } 
         catch (error) {
@@ -47,7 +47,7 @@ class ContenedorMongoDb {
     async updateById(id, props){
         try {
             const updated = await this.schema.updateOne({_id: id}, { $set: props })
-            logger.info(updated)
+            return logger.info(updated)
         } catch (error) {
             logger.error(error)            
         }
@@ -58,7 +58,6 @@ class ContenedorMongoDb {
             const found = await this.schema.find();
             return found.length 
             ? found
-            // ? (console.log(found), found)
             : logger.info("No hay objetos")
         } 
         catch (error) {

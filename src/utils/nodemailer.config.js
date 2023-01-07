@@ -13,4 +13,4 @@ const transporter = createTransport({
    tls : { rejectUnauthorized: false }
 })
 
-module.exports = transporter
+module.exports = { transporter, mail }
