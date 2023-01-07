@@ -1,11 +1,11 @@
 <div class="container py-3">
-  <h2>Perfil 🙎‍♂️</h2>
+  <h2>Administracion de Usuarios 🙎‍♂️🙎‍♀️</h2>
   <div class="container my-3">
     <img class="mb-3" src=<%= user.imgURL %> alt="" width="80" height="80">
         <div class="btn-group">
-          <button type="submit" class="mx-4 p-2 btn-view"><a href="/carrito" class="text-decoration-none">Carrito</a></button>
-          <button type="submit" class="mx-4 p-2 btn-view"><a href="/chat/mismensajes" class="text-decoration-none">Mensajes</a></button>
-          <button type="submit" class="mx-4 p-2 btn-view"><a href="/ordenes" class="text-decoration-none">Órdenes</a></button>
+          <form action="/usuarios/<%= user.id %>?_method=DELETE" method="post">
+              <button type="submit" class="mx-4 p-2 rounded-0 btn btn-danger">Eliminar</button>
+          </form>
         </div></br>
         <span>Nombre</span>
         <span class="form-control w-25 p-1 mb-3 mt-1"><%= user.name %></span>

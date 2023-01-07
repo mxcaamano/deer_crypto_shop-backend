@@ -1,7 +1,7 @@
 const businessCarts = require('../business/businessCarts');
 const businessOrders = require('../business/businessOrders');
 const businessProds = require('../business/businessProducts');
-const userModel = require('../models/user.model');
+const businessUsers = require('../business/businessUsers');
 const logger = require('../utils/logger');
 const crypto = require('crypto');
 const formatDate = require('../utils/formatDate')
@@ -17,7 +17,7 @@ const transporter = require('../utils/nodemailer.config')
 // const sendMsg = require('../utils/twilio.config')
 
 const createCart = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const cart = await businessCarts.getByEmail(user.email)
     if(!cart){
         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
@@ -26,7 +26,7 @@ const createCart = async (req, res) => {
 }
 
 // const createCart = async (req, res) => {
-//     const user = await userModel.findOne({_id: req.session.passport.user});
+//     const user = await businessUsers.getById(req.session.passport.user);
 //     const carts = await businessCarts.getAll();
 //     if(carts.find(e => e.email == user.email)){
 //         res.status(200).json({ message: 'El carrito ya existe' })
@@ -67,7 +67,7 @@ const deleteCart = async (req, res) => {
 
 const getCart = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const cart = await businessCarts.getByEmail(user.email)
     if(cart){
         state = true;
@@ -92,7 +92,7 @@ const getCart = async (req, res) => {
 
 const updateCart = async (req, res) => {
     const { id_prod, qty } = req.body
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     await createCart(req)
     let cart = await businessCarts.getByEmail(user.email);
     if(qty>0){
@@ -168,7 +168,7 @@ const deleteCartProduct = async (req, res) => {
 
 const sendCart = async (req, res) => {
     const { id_cart, total } = req.body
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const cart = await businessCarts.getById(id_cart)
     if(cart){
         const order = { items: cart.products, total: total, date: formatDate(new Date()), state: 'Generada', buyer: cart.email }

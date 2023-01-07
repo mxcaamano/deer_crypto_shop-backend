@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const userModel = require('../models/user.model');
+// const businessUsers = require('../business/businessUsers');
+const businessUsers = require('../business/businessUsers')
 const { isValidPassword } = require('./bcrypt.config');
 const logger = require('./logger');
 
@@ -10,7 +11,7 @@ passport.use('login', new LocalStrategy({
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
-      const user = await userModel.findOne({ email });
+      const user = await businessUsers.getByEmail(email);
       if (!user){
         logger.info(`Usuario no encontrado con el correo: ${email}`)
         return done(null, false);
@@ -29,6 +30,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await userModel.findById(id);
+  const user = await businessUsers.getById(id)
   done(null, user);
 });

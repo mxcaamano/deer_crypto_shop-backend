@@ -21,5 +21,5 @@ module.exports = {
     },
     async getByEmail(email){
         return await carts.getByEmail(email);
-    },
+    }
 }

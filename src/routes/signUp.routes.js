@@ -1,6 +1,7 @@
 const Router = require('express');
 const { getSignUp, getFailsignUp } = require('../controllers/signUp.controller');
-const userModel = require('../models/user.model');
+// const businessUsers = require('../business/businessUsers');
+const businessUsers = require('../business/businessUsers')
 const { createHash } = require('../utils/bcrypt.config');
 const { userMiddleware } = require('../middlewares/middlewares.js');
 const upload = require('../middlewares/uploadMiddleware');
@@ -23,10 +24,8 @@ routerSignUp.post('/', upload.single('image'), userMiddleware, async function (r
     res.status(401).json({error: 'Please provide an image'});
     }
     const filename = await fileUpload.save(req.file.buffer);
-    // return res.status(200).json({ name: filename });
-    const user = { email, password: createHash(password), name, address, age, phone, imgURL: imagePath.slice(8) + '/' + filename, isAdmin: false };
-    const User = new userModel(user);
-    await User.save();
+    const userFields = { email, password: createHash(password), name, address, age, phone, imgURL: imagePath.slice(8) + '/' + filename, isAdmin: false };
+    const user = await businessUsers.save(userFields);
     const mailOptions =  {
       from: `${user.email}`,
       to: mail,

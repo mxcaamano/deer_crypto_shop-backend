@@ -1,18 +1,18 @@
 const businessProds = require('../business/businessProducts');
 const logger = require('../utils/logger');
 const crypto = require('crypto');
-const userModel = require('../models/user.model');
+const businessUsers = require('../business/businessUsers');
 const categories = ['GPUs', 'Fuentes', 'Motherboards', 'Coolers', 'Risers', 'Rigs', 'ASICs']
 
 const getProducts = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    // const user = await userModel.findOne({_id: req.session.passport.user});
+    // const user = await businessUsers.getById(req.session.passport.user);
     const products = await businessProds.getAll();
     let state = null
     products.length ? state = true : state = false
     // res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: "Productos"});
     if(req.session.passport !== undefined){
-        const user = await userModel.findOne({_id: req.session.passport.user});
+        const user = await businessUsers.getById(req.session.passport.user);
         res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: "Productos"});
     }
     else{
@@ -25,13 +25,13 @@ const getProducts = async (req, res) => {
 
 const getProductsByCategory = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    // const user = await userModel.findOne({_id: req.session.passport.user});
+    // const user = await businessUsers.getById(req.session.passport.user);
     const category = req.params.category
     const products = await businessProds.getByCategory(category)
     let state = null
     products.length ? state = true : state = false
     if(req.session.passport !== undefined){
-        const user = await userModel.findOne({_id: req.session.passport.user});
+        const user = await businessUsers.getById(req.session.passport.user);
         res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: category});
     }
     else{
@@ -45,7 +45,7 @@ const getProductsByCategory = async (req, res) => {
 
 const getProductById = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
     const product = await businessProds.getById(id)
     let state = null
@@ -57,7 +57,7 @@ const getProductById = async (req, res) => {
 }
 
 const addProduct = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         const product = req.body;
         if(product.title && !isNaN(product.price) && product.price > 0 && product.category == categories.find(e => e.toUpperCase() === product.category.toUpperCase()) && product.description && product.thumbnail && product.stock > 0 ){
@@ -75,7 +75,7 @@ const addProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
     const { id } = req.params
     const { title, price, description, category, thumbnail, code, stock  } = req.body
@@ -95,7 +95,7 @@ const updateProduct = async (req, res) => {
 }
 
 const deleteProduct = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         const id = req.params.id
         await businessProds.deleteById(id) === 1 
@@ -110,7 +110,7 @@ const deleteProduct = async (req, res) => {
 }
 
 const deleteAllProducts = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         !isNaN(await businessProds.deleteAll()) 
         ? res.redirect('/productos') // res.status(200).json({ message: 'Productos eliminados' })

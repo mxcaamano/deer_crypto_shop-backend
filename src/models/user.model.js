@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-  name: String,
-  address: String,
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  name: { type: String, required: true },
+  address: { type: String, required: true },
   age: String,
-  phone: String,
-  imgURL: String,
+  phone: { type: String, required: true },
+  imgURL: { type: String, required: true },
   isAdmin: Boolean
 });
 

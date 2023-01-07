@@ -1,38 +1,31 @@
-// Se comentaron los Dao no implementados no requeridos en la consigna
+const logger = require('../utils/logger')
 
-const ProductosDaoArchivo = require('./productos/ProductosDaoArchivo.js');
-// const ProductosDaoMemoria = require('./productos/ProductosDaoMemoria.js');
 const ProductosDaoMongoDb = require('./productos/ProductosDaoMongoDb.js');
-
-const CarritosDaoArchivo = require('./carritos/CarritosDaoArchivo.js');
-// const CarritosDaoMemoria = require('./carritos/CarritosDaoMemoria.js');
 const CarritosDaoMongoDb = require('./carritos/CarritosDaoMongoDb.js');
-
-const MessagesDaoArchivo = require('./mensajes/MessagesDaoArchivo.js');
-// const MessagesDaoMemoria = require('./mensajes/MessagesDaoMemoria.js');
 const MessagesDaoMongoDb = require('./mensajes/MessagesDaoMongoDb.js');
-
 const OrdersDaoMongoDb = require('./orders/OrdersDaoMongoDb.js');
+const UsersDaoMongoDb = require('./users/UsersDaoMongoDb.js');
 
 switch (process.env.DATABASE) {
     case 'mongodb':
+        logger.info('Base de datos: '+ process.env.DATABASE);
         exports.productsFactory = ProductosDaoMongoDb;
         exports.cartsFactory = CarritosDaoMongoDb;
         exports.messagesFactory = MessagesDaoMongoDb;
         exports.ordersFactory = OrdersDaoMongoDb;
+        exports.usersFactory = UsersDaoMongoDb;
         break
 
-    case 'file':
-        exports.productsFactory = ProductosDaoArchivo;
-        exports.cartsFactory = CarritosDaoArchivo;
-        exports.messagesFactory = MessagesDaoArchivo;
+    case 'firebase':
+        logger.info('Este es un placeholder donde se implementarían los Dao de Firebase');
+        logger.info('Acá se implementarían los Dao de '+ process.env.DATABASE);
         break
 
-    case 'mem':
-        // exports.productsFactory = ProductosDaoMemoria;
-        // exports.cartsFactory = CarritosDaoMemoria;
+    case 'fs':
+        logger.info('Este es un placeholder donde se implementarían los Dao de Filesystem');
+        logger.info('Acá se implementarían los Dao de Filesystem' + process.env.DATABASE);
         break
 
     default:
-        console.log('No se seleccionó base de datos')
+        logger.info('No se seleccionó base de datos');
 }

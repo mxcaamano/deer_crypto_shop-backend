@@ -24,5 +24,5 @@ module.exports = {
     },
     async getByCategory(category){
         return await products.getByCategory(category);
-    },
+    }
 }

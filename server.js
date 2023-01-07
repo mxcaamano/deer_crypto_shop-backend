@@ -35,7 +35,7 @@ app.use(compression())
 let server
 const PORT = process.env.PORT || config.PORT;
 const MODE = process.env.MODE || config.MODE;
-const { CPUqty } = require('./src/routes/info.router');
+const { CPUqty } = require('./src/routes/info.routes');
 
 if(MODE === 'cluster' && cluster.isPrimary){
     logger.info(PORT, MODE);
@@ -69,12 +69,12 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //WebSockets
-const chat = require('./src/routes/messages.sockets.router');
+const chat = require('./src/routes/messages.sockets.routes');
 const io = new IOServer(server)
 io.on('connection',(socket) => chat(socket,io))
 
 //Rutas
-const routes = require('./src/routes/index.router');
+const routes = require('./src/routes/index.routes');
 const methodOverride = require("method-override");
 app.use(methodOverride('_method'));
 app.use(routes);

@@ -1,10 +1,10 @@
 const businessOrders = require('../business/businessOrders');
-const userModel = require('../models/user.model');
+const businessUsers = require('../business/businessUsers');
 const logger = require('../utils/logger');
 
 const getOrders = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     let orders
     user.isAdmin ? orders = await businessOrders.getAll() : orders = await businessOrders.getByEmail(user.email)
     let state = null
@@ -14,7 +14,7 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
     const order = await businessOrders.getById(id);
     if(order){
@@ -32,7 +32,7 @@ const getOrderById = async (req, res) => {
 }
 
 const updateOrder = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
     if(user.isAdmin){
         const { state } = req.body;
@@ -51,7 +51,7 @@ const updateOrder = async (req, res) => {
 }
 
 const deleteOrder = async (req, res) => {
-    const user = await userModel.findOne({_id: req.session.passport.user});
+    const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
         if(user.isAdmin){
             await businessOrders.deleteById(id);

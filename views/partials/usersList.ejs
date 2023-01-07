@@ -1,0 +1,38 @@
+<div class="container py-2">
+    <h2 class="my-3">Administración de usuarios 🙎‍♂️🙎‍♀️</h2>
+    <div class="album py-3 mb-5 my-3">
+        <div class="container">
+        <% if(listExist){ %>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3" id="users">
+            <% list.forEach(user => { %>
+                <div class="container my-3">
+                <img class="mb-3" src=<%= user.imgURL %> alt="" width="80" height="80">
+                  <div class="btn-group">
+                    <button class="mx-4 p-2 btn-view"><a href="/usuarios/<%= user.id %>" class="text-decoration-none">Perfil</a></button>
+                    <form action="/usuarios/<%= user.id %>?_method=DELETE" method="post">
+                        <button type="submit" class="mx-4 p-2 rounded-0 btn btn-danger">Eliminar</button>
+                    </form>
+                  </div></br>
+                  <span class="fs-5">Nombre:</span>
+                  <span class="w-50 p-1 mb-3 mt-1"><%= user.name %></span><br>
+                  <span class="fs-5">E-Mail:</span>
+                  <span class="w-50 p-1 mb-3 mt-1"><%= user.email %></span><br>
+                  <span class="fs-5">Dirección:</span>
+                  <span class="w-50 p-1 mb-3 mt-1"><%= user.address %></span><br>
+                  <span class="fs-5">Teléfono:</span>
+                  <span class="w-50 p-1 mb-3 mt-1"><%= user.phone %></span><br>
+                  <span class="fs-5">Edad:</span>
+                  <span class="w-50 p-1 mb-3 mt-1"><%= user.age %></span><br>
+                </div>                
+            <% })%>
+            </div>
+        </div>
+    </div>
+        <%}else{%>
+            <div class="card-body cart">
+                <div class="col-sm-12 empty-cart-cls text-center">
+                <h4 class="fs-4">No hay productos 😕! Proximamente se añadiran productos a esta categoria 🤑</h4>
+                </div>
+            </div>
+        <%}%>
+</div>    
