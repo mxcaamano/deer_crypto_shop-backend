@@ -25,29 +25,6 @@ const createCart = async (req, res) => {
     }
 }
 
-// const createCart = async (req, res) => {
-//     const user = await businessUsers.getById(req.session.passport.user);
-//     const carts = await businessCarts.getAll();
-//     if(carts.find(e => e.email == user.email)){
-//         res.status(200).json({ message: 'El carrito ya existe' })
-//     }
-//     else{
-//         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
-//         cart
-//         ? (await businessCarts.save(cart),
-//         res.status(200).json({ message: 'Carrito creado' }))
-//         : res.status(400).json({ message: 'No se pudo crear el carrito' })
-//     }
-// }
-
-// const createCart = async (req, res) => {
-//     const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
-//     cart
-//     ? (res.status(200).json({ message: 'Carrito creado' }),
-//     res.json(await businessCarts.save(cart)))
-//     : res.status(400).json({ message: 'No se pudo crear el carrito' })
-// }
-
 const deleteCart = async (req, res) => {
     const { id_cart } = req.body;
     await businessCarts.deleteById(id_cart);
@@ -55,15 +32,6 @@ const deleteCart = async (req, res) => {
     // res.status(200).json({ message: 'Carrito eliminado' }))
     // : res.status(400).json({ message: 'El carrito no existe' })
 }
-
-// const deleteCart = async (req, res) => {
-//     const id = req.params.id
-//     const found = await businessCarts.getById(id)
-//     found
-//     ? (await businessCarts.deleteById(id), 
-//     res.status(200).json({ message: 'Carrito eliminado' }))
-//     : res.status(400).json({ message: 'El carrito no existe' })
-// }
 
 const getCart = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
@@ -82,58 +50,38 @@ const getCart = async (req, res) => {
     }
 }
 
-// const getCart = async (req, res) => {
-//     const id = req.params.id
-//     const cart = await businessCarts.getById(id)
-//     cart
-//     ? res.json(cart.products)
-//     : res.status(400).json({ message: 'El carrito no existe' })
-// }
 
 const updateCart = async (req, res) => {
     const { id_prod, qty } = req.body
     const user = await businessUsers.getById(req.session.passport.user);
     await createCart(req)
     let cart = await businessCarts.getByEmail(user.email);
-    if(qty>0){
     let product
     process.env.DATABASE === 'file' 
     ? product = await businessProds.getById(id_prod)
     : product = await businessProds.getNative(id_prod)
         if(product){
-            product._id = id_prod
-            const prodCart = cart.products.find(p => p._id == id_prod)
-            cart.products = cart.products.filter(p => p !== prodCart)
-            product.id = crypto.randomBytes(10).toString('hex');
-            product.qty = parseInt(qty)
-            delete product.stock
-            cart.products.push(product)
-            await businessCarts.updateById(cart.id, {products: cart.products, timestamp: cart.timestamp})
-            // res.status(200).json({ message: 'Producto añadido al carrito' })
-            res.redirect('/carrito')
+            if(qty > 0 && qty <= product.stock){
+                product._id = id_prod
+                const prodCart = cart.products.find(p => p._id == id_prod)
+                cart.products = cart.products.filter(p => p !== prodCart)
+                product.id = crypto.randomBytes(10).toString('hex');
+                product.qty = parseInt(qty)
+                delete product.stock
+                cart.products.push(product)
+                await businessCarts.updateById(cart.id, {products: cart.products, timestamp: cart.timestamp})
+                // res.status(200).json({ message: 'Producto añadido al carrito' })
+                res.redirect('/carrito')
+            }
+            else{
+                res.render('pages/systemMessage', { message: 'Cantidad de producto ingresada incorrecta, intente nuevamente', success: false, href: 'productos' });
+            }
         }
         else{
             res.render('pages/systemMessage', { message: 'El producto que intentas agregar al carrito no existe', success: false, href: 'productos' });
             // res.status(400).json({ message: 'El producto no existe' })
         }
-    }
-    else{
-        res.render('pages/systemMessage', { message: 'La cantidad a agregar del producto debe ser mayor a 0', success: false, href: 'productos' });
-    }
 }
-
-// const updateCart = async (req, res) => {
-//     const id = req.params.id
-//     const { id_prod } = req.body
-//     const cart = await businessCarts.getById(id)
-//     const product = await businessProds.getById(id_prod)
-//     product 
-//     ? (product._id = cart.products.length + 1, 
-//     cart.products.push(product),
-//     res.status(200).json({ message: 'Producto añadido al carrito' }),
-//     res.json(await businessCarts.updateById(id, {products: cart.products, timestamp: cart.timestamp})))
-//     : res.status(400).json({ message: 'El producto no existe' }) 
-// }
 
 const deleteCartProduct = async (req, res) => {
     const id_prod = req.params.id_prod
@@ -150,21 +98,6 @@ const deleteCartProduct = async (req, res) => {
         // res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
     }
 }
-
-// const deleteCartProduct = async (req, res) => {
-//     const id = req.params.id
-//     const id_prod = req.params.id_prod
-//     const cart = await businessCarts.getById(id)
-//     const product = cart.products.find(p => p._id == id_prod)
-//     if(product){
-//     const productsArr = cart.products.filter(p => p !== product)
-//     res.status(200).json({ message: 'Producto eliminado del carrito' })
-//     res.json(await businessCarts.updateById(id, {timestamp: cart.timestamp, products: productsArr}))
-//     }
-//     else{
-//         res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
-//     }
-// }
 
 const sendCart = async (req, res) => {
     const { id_cart, total } = req.body

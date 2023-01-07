@@ -17,8 +17,8 @@
                     <p class="card-text h5">Precio: <%= item.price %> U$S <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></p>
                     <span>Disponibles <%= item.stock %></span>
                     <form action="/carrito?_method=PUT" method="post">
-                        <input type="hidden" id="id_prod" name="id_prod" class="form-control" required value = <%= item.id %>>
-                        <input type="number" id="qty" name="qty" class="w-25 form-control my-2" min=1 max=<%= item.stock %>>
+                        <input type="hidden" id="id_prod" name="id_prod" class="form-control" required value=<%= item.id %>>
+                        <input type="number" id="qty" name="qty" class="w-25 form-control my-2" min=1 max=<%= item.stock %> value=1>
                         <button type="submit" class="p-2 btn-view">Añadir al Carrito</button>
                     </form>
                     <% if(isAdmin){ %>

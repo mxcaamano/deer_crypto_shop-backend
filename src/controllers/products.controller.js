@@ -45,12 +45,17 @@ const getProductsByCategory = async (req, res) => {
 
 const getProductById = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
     const product = await businessProds.getById(id)
     let state = null
     product ? state = true : state = false
-    res.render('pages/product', {exist: state, item: product, isAdmin: user.isAdmin} );
+    if(req.session.passport !== undefined){
+        const user = await businessUsers.getById(req.session.passport.user);
+        res.render('pages/product', {exist: state, item: product, isAdmin: user.isAdmin} );
+    }
+    else{
+        res.render('pages/productGuest', {exist: state, item: product, isAdmin: false});
+    }
     // return product 
     // ? res.json(product) 
     // : res.status(400).json({ error: 'No se encuentra el producto' });

@@ -5,7 +5,7 @@ const { authMiddleware } = require('../middlewares/middlewares');
 const routerProducts = Router()
 
 routerProducts.get('/', getProducts)
-routerProducts.get('/:id', authMiddleware, getProductById)
+routerProducts.get('/:id', getProductById)
 routerProducts.get('/categorias/:category', getProductsByCategory)
 routerProducts.post('/', authMiddleware, addProduct)
 routerProducts.put('/:id', authMiddleware, updateProduct)
