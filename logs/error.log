@@ -158,3 +158,14 @@
 {"_message":"User validation failed","errors":{"name":{"kind":"required","message":"Path `name` is required.","name":"ValidatorError","path":"name","properties":{"message":"Path `name` is required.","path":"name","type":"required","value":""},"value":""}},"level":"error"}
 {"_message":"User validation failed","errors":{"name":{"kind":"required","message":"Path `name` is required.","name":"ValidatorError","path":"name","properties":{"message":"Path `name` is required.","path":"name","type":"required","value":""},"value":""}},"level":"error"}
 {"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"gpus\"","value":"gpus","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"63b50b382d8585aebcee2aabss\"","value":"63b50b382d8585aebcee2aabss","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"logout\"","value":"logout","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"logout\"","value":"logout","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}

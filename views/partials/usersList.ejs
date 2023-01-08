@@ -8,7 +8,7 @@
                 <div class="container my-3">
                 <img class="mb-3" src=<%= user.imgURL %> alt="" width="80" height="80">
                   <div class="btn-group">
-                    <button class="mx-4 p-2 btn-view"><a href="/usuarios/<%= user.id %>" class="text-decoration-none">Perfil</a></button>
+                    <a href="/usuarios/<%= user.id %>" class="text-decoration-none"><button class="mx-4 p-2 btn-view">Perfil</button></a>
                     <form action="/usuarios/<%= user.id %>?_method=DELETE" method="post">
                         <button type="submit" class="mx-4 p-2 rounded-0 btn btn-danger">Eliminar</button>
                     </form>

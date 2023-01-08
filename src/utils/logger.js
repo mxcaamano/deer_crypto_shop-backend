@@ -9,13 +9,6 @@ const levelFilter = (level) =>
 const logger = createLogger({
   transports: [
     new transports.Console(),
-    // new transports.File({
-    //     filename: "logs/info.log",
-    //     format: format.combine(
-    //       levelFilter("info"),
-    //       format.json()
-    //     )
-    // }),
     new transports.File({
         filename: "logs/warn.log",
         format: format.combine(

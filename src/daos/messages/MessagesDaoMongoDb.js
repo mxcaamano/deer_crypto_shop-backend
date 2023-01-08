@@ -1,11 +1,11 @@
-const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb');
+const { ContainerMongoDb } = require('../../containers/ContainerMongoDb');
 const messagesModel = require('../../models/messages.model');
-const config = require('../../../config');
+const { DBURL } = require('../../../config');
 const logger = require('../../utils/logger');
 
-class MessagesDaoMongoDb extends ContenedorMongoDb{
+class MessagesDaoMongoDb extends ContainerMongoDb{
     constructor(){
-        super(config.DBURL, messagesModel)
+        super(DBURL, messagesModel)
     }
     async getByEmail(email){
         try {

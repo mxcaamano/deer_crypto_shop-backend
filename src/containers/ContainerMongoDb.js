@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const logger = require('../utils/logger')
 let instance = null
 
-class ContenedorMongoDb {
+class ContainerMongoDb {
     constructor(dbUrl, schema){
         this.db = dbUrl 
         this.schema = schema
@@ -99,4 +99,4 @@ class ContenedorMongoDb {
     }
 }
 
-module.exports = { ContenedorMongoDb }
+module.exports = { ContainerMongoDb }

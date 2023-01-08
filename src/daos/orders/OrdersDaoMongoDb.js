@@ -1,10 +1,10 @@
-const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb');
+const { ContainerMongoDb } = require('../../containers/ContainerMongoDb');
 const ordersModel = require('../../models/orders.model')
-const config = require('../../../config')
+const { DBURL } = require('../../../config')
 
-class OrdersDaoMongoDb extends ContenedorMongoDb{
+class OrdersDaoMongoDb extends ContainerMongoDb{
     constructor(){
-        super(config.DBURL, ordersModel)
+        super(DBURL, ordersModel)
     }
     async getByEmail(email){
         try {

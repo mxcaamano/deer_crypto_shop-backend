@@ -1,11 +1,11 @@
-const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb')
+const { ContainerMongoDb } = require('../../containers/ContainerMongoDb')
 const cartModel = require('../../models/cart.model')
-const config = require('../../../config')
+const { DBURL } = require('../../../config')
 const logger = require('../../utils/logger')
 
-class CarritosDaoMongoDb extends ContenedorMongoDb{
+class CartsDaoMongoDb extends ContainerMongoDb{
     constructor(){
-        super(config.DBURL, cartModel)
+        super(DBURL, cartModel)
     }
     async getByEmail(email){
         try {
@@ -18,4 +18,4 @@ class CarritosDaoMongoDb extends ContenedorMongoDb{
     }
 }
 
-module.exports = CarritosDaoMongoDb
+module.exports = CartsDaoMongoDb

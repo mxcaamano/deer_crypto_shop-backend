@@ -1,29 +1,46 @@
-const logger = require('../utils/logger')
+const logger = require('../utils/logger');
+const { DATABASE, ENV} = require('../../config')
 
-const ProductosDaoMongoDb = require('./productos/ProductosDaoMongoDb.js');
-const CarritosDaoMongoDb = require('./carritos/CarritosDaoMongoDb.js');
-const MessagesDaoMongoDb = require('./mensajes/MessagesDaoMongoDb.js');
+const ProductsDaoMongoDb = require('./products/ProductsDaoMongoDb.js');
+const CartsDaoMongoDb = require('./carts/CartsDaoMongoDb.js');
+const MessagesDaoMongoDb = require('./messages/MessagesDaoMongoDb')
 const OrdersDaoMongoDb = require('./orders/OrdersDaoMongoDb.js');
 const UsersDaoMongoDb = require('./users/UsersDaoMongoDb.js');
 
-switch (process.env.DATABASE) {
+switch (DATABASE) {
     case 'mongodb':
-        logger.info('Base de datos: '+ process.env.DATABASE);
-        exports.productsFactory = ProductosDaoMongoDb;
-        exports.cartsFactory = CarritosDaoMongoDb;
+        logger.info('Base de datos seleccionada: '+ DATABASE);
+        exports.productsFactory = ProductsDaoMongoDb;
+        exports.cartsFactory = CartsDaoMongoDb;
+        exports.messagesFactory = MessagesDaoMongoDb;
+        exports.ordersFactory = OrdersDaoMongoDb;
+        exports.usersFactory = UsersDaoMongoDb;
+        break
+    //Los siguientes dos Case estan hechos a efectos de ilustrar como sería la persistencia si se añadieran otras bases de Datos.
+    case 'firebase':
+        if(ENV === 'development'){
+            logger.info('Este es un placeholder donde se implementarían los Dao de Firebase');
+            logger.info('Acá se implementarían los Dao de '+ DATABASE);
+        }
+        logger.info('Base de datos seleccionada: mongodb');
+        exports.productsFactory = ProductsDaoMongoDb;
+        exports.cartsFactory = CartsDaoMongoDb;
         exports.messagesFactory = MessagesDaoMongoDb;
         exports.ordersFactory = OrdersDaoMongoDb;
         exports.usersFactory = UsersDaoMongoDb;
         break
 
-    case 'firebase':
-        logger.info('Este es un placeholder donde se implementarían los Dao de Firebase');
-        logger.info('Acá se implementarían los Dao de '+ process.env.DATABASE);
-        break
-
     case 'fs':
-        logger.info('Este es un placeholder donde se implementarían los Dao de Filesystem');
-        logger.info('Acá se implementarían los Dao de Filesystem' + process.env.DATABASE);
+        if(ENV === 'development'){
+            logger.info('Este es un placeholder donde se implementarían los Dao de Filesystem');
+            logger.info('Acá se implementarían los Dao de Filesystem' + DATABASE);
+        }
+        logger.info('Base de datos seleccionada: mongodb');
+        exports.productsFactory = ProductsDaoMongoDb;
+        exports.cartsFactory = CartsDaoMongoDb;
+        exports.messagesFactory = MessagesDaoMongoDb;
+        exports.ordersFactory = OrdersDaoMongoDb;
+        exports.usersFactory = UsersDaoMongoDb;
         break
 
     default:

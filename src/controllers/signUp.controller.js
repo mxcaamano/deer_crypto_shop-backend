@@ -11,10 +11,12 @@ const getSignUp = (req, res) => {
 };
 
 const getFailsignUp = (req, res) => {
+  logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
   res.render('pages/signUpError')
 }
 
 const postsignUp = async (req, res) => {
+  logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const { email, password, name, address, age, phone } = req.body;
     let emptyProp
     for(var key in req.body) {
@@ -29,7 +31,6 @@ const postsignUp = async (req, res) => {
         : 'Por favor, complete los campos correctamente' , 
         success: false, 
         href: `signUp` });
-      // res.status(401).json({error: 'Please provide an image'});
       }
       else{
         try {

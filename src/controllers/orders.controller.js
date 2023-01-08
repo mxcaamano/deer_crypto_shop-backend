@@ -7,6 +7,7 @@ const getOrders = async (req, res) => {
     const user = await businessUsers.getById(req.session.passport.user);
     let orders
     user.isAdmin ? orders = await businessOrders.getAll() : orders = await businessOrders.getByEmail(user.email)
+    // En algunas vistas donde se representan array se utilizó estos "estados" para establecer condiciones en el front.
     let state = null
     orders.length ? state = true : state = false
     res.render('pages/orders', { listExist: state, list: orders, isAdmin: user.isAdmin } );
@@ -32,6 +33,7 @@ const getOrderById = async (req, res) => {
 }
 
 const updateOrder = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
     if(user.isAdmin){
@@ -51,6 +53,7 @@ const updateOrder = async (req, res) => {
 }
 
 const deleteOrder = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     const id = req.params.id;
         if(user.isAdmin){

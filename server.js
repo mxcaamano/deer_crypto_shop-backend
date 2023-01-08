@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const { Server: IOServer } = require('socket.io');
-require('dotenv').config();
 const config = require('./config');
+require('dotenv').config()
+require('dotenv').config({ path: `./${process.env.NODE_ENV}.env` })
 const cluster = require('cluster');
 const compression = require('compression')
 const logger = require('./src/utils/logger')
@@ -23,7 +24,7 @@ app.use(
       saveUninitialized: true,
       store: MongoStore.create({ mongoUrl: process.env.DBURL, mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true} }),
       cookie: {
-        maxAge: 6000000,
+        maxAge: 3600000,
       },
     })
   );
@@ -76,5 +77,6 @@ io.on('connection',(socket) => chat(socket,io))
 //Rutas
 const routes = require('./src/routes/index.routes');
 const methodOverride = require("method-override");
+const { path } = require('./src/routes/index.routes');
 app.use(methodOverride('_method'));
 app.use(routes);

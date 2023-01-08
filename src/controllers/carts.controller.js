@@ -5,6 +5,7 @@ const businessUsers = require('../business/businessUsers');
 const logger = require('../utils/logger');
 const crypto = require('crypto');
 const formatDate = require('../utils/formatDate')
+const { ENV } = require('../../config')
 
 //nodemailer
 const { transporter, mail } = require('../utils/nodemailer.config')
@@ -18,21 +19,21 @@ const createCart = async (req, res) => {
     if(!cart){
         const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
         await businessCarts.save(cart)
+        return cart
     }
 }
 
 const deleteCart = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const { id_cart } = req.body;
     await businessCarts.deleteById(id_cart);
     res.redirect('/carrito');
-    // res.status(200).json({ message: 'Carrito eliminado' }))
-    // : res.status(400).json({ message: 'El carrito no existe' })
 }
 
 const getCart = async (req, res) => {
-    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
-    const cart = await businessCarts.getByEmail(user.email)
+    let cart = await businessCarts.getByEmail(user.email)
     if(cart){
         state = true;
         const qtyItems = cart.products.reduce((prev, curr) => prev + curr.qty, 0);
@@ -40,14 +41,15 @@ const getCart = async (req, res) => {
         res.render('pages/cart', {list: cart.products, total: total, qtyItems: qtyItems, id_cart: cart.id})
     }
     else{
-        const cart = {email: user.email, address: user.address, products: [], timestamp: Date.now()}
-        await businessCarts.save(cart)
+        // Al no existir un carrito, lo crea utilizando los datos del usuario de la sesión.
+        cart = await createCart(req)
         res.render('pages/cart', {list: cart.products})
     }
 }
 
 
 const updateCart = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const { id_prod, qty } = req.body
     const user = await businessUsers.getById(req.session.passport.user);
     await createCart(req)
@@ -66,7 +68,6 @@ const updateCart = async (req, res) => {
                 delete product.stock
                 cart.products.push(product)
                 await businessCarts.updateById(cart.id, {products: cart.products, timestamp: cart.timestamp})
-                // res.status(200).json({ message: 'Producto añadido al carrito' })
                 res.redirect('/carrito')
             }
             else{
@@ -75,11 +76,11 @@ const updateCart = async (req, res) => {
         }
         else{
             res.render('pages/systemMessage', { message: 'El producto que intentas agregar al carrito no existe', success: false, href: 'productos' });
-            // res.status(400).json({ message: 'El producto no existe' })
         }
 }
 
 const deleteCartProduct = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const id_prod = req.params.id_prod
     const { id_cart } = req.body
     const cart = await businessCarts.getById(id_cart)
@@ -91,11 +92,11 @@ const deleteCartProduct = async (req, res) => {
     }
     else{
         res.render('pages/systemMessage', { message: 'El producto seleccionado no existe en el carrito', success: false, href: 'carrito' });
-        // res.status(400).json({ message: 'El producto seleccionado no existe en el carrito' })
     }
 }
 
 const sendCart = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const { id_cart, total } = req.body
     const user = await businessUsers.getById(req.session.passport.user);
     const cart = await businessCarts.getById(id_cart)
@@ -133,11 +134,13 @@ const sendCart = async (req, res) => {
                     </div><br>`
         }
         await transporter.sendMail(mailOptions)
-        await sendMsg(`Hola ${user.name}!, tu orden #${createdOrder.orderN} fue generada, solo queda esperar novedades!`,'+14793365162',process.env.PHONE)
-        await sendMsg(`Orden de compra #${createdOrder.orderN}\n ID: ${createdOrder.id} \n Comprador: ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
+        // Dado que en entorno de desarrollo se hacen multiples pruebas, ingresé una condicion para que solo en produccion se envíen mensajes evitando uso del saldo de prueba de Twilio.
+        if(ENV === 'production'){
+            await sendMsg(`Hola ${user.name}!, tu orden #${createdOrder.orderN} fue generada, solo queda esperar novedades!`,'+14793365162',process.env.PHONE)
+            await sendMsg(`Orden de compra #${createdOrder.orderN}\n ID: ${createdOrder.id} \n Comprador: ${user.name}\n ${arrayItemsMsg}\n Total: ${total} U$S `,'whatsapp:+14155238886',`whatsapp:${process.env.WHATSAPP_PHONE}`)
+        }
         await businessCarts.deleteById(id_cart)
         res.render('pages/systemMessage', { message: `Se ha enviado tu orden de compra, podés consultar su estado en /ordenes`, success: true, href: 'productos' });
-        // res.status(200).json({ message: 'Pedido enviado' })
     }
     else{
         res.render('pages/systemMessage', { message: `Ha surgido un error al intentar enviar tu orden, ingresa a tu carrito e intentalo nuevamente`, success: false, href: 'carrito' });

@@ -6,11 +6,9 @@ const categories = ['GPUs', 'Fuentes', 'Motherboards', 'Coolers', 'Risers', 'Rig
 
 const getProducts = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    // const user = await businessUsers.getById(req.session.passport.user);
     const products = await businessProds.getAll();
     let state = null
     products.length ? state = true : state = false
-    // res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: "Productos"});
     if(req.session.passport !== undefined){
         const user = await businessUsers.getById(req.session.passport.user);
         res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: "Productos"});
@@ -18,14 +16,10 @@ const getProducts = async (req, res) => {
     else{
         res.render('pages/productsGuest', {listExist: state, list: products, isAdmin: false, category: "Productos"});
     }
-    // products 
-    // ? res.json(products)
-    // : res.status(400).json({ error: 'No se encuentran productos' });
 }
 
 const getProductsByCategory = async (req, res) => {
     logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`)
-    // const user = await businessUsers.getById(req.session.passport.user);
     const category = req.params.category
     const products = await businessProds.getByCategory(category)
     let state = null
@@ -37,10 +31,6 @@ const getProductsByCategory = async (req, res) => {
     else{
         res.render('pages/productsGuest', {listExist: state, list: products, isAdmin: false, category: category});
     }
-    // res.render('pages/products', {listExist: state, list: products, isAdmin: user.isAdmin, category: category} );
-    // products 
-    // ? res.json(products)
-    // : res.status(400).json({ error: 'No se encuentran productos' });
 }
 
 const getProductById = async (req, res) => {
@@ -56,12 +46,10 @@ const getProductById = async (req, res) => {
     else{
         res.render('pages/productGuest', {exist: state, item: product, isAdmin: false});
     }
-    // return product 
-    // ? res.json(product) 
-    // : res.status(400).json({ error: 'No se encuentra el producto' });
 }
 
 const addProduct = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         const product = req.body;
@@ -75,11 +63,11 @@ const addProduct = async (req, res) => {
     }
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción.', success: false, href: `productos` });
-        // res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
     }
 }
 
 const updateProduct = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
     const { id } = req.params
@@ -90,40 +78,37 @@ const updateProduct = async (req, res) => {
         }
         else{
             res.render('pages/systemMessage', { message: 'Los datos del producto no fueron ingresados correctamente.', success: false, href: `productos` });
-            // res.status(400).json({ error: 'Se requiere titulo, precio(debe ser numero), descripción, url de imagen, codigo y stock(debe ser numero)' });
         }
     }
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `productos` });
-        // res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
     }
 }
 
 const deleteProduct = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         const id = req.params.id
         await businessProds.deleteById(id) === 1 
-        ? res.redirect('/productos') // res.status(200).json({ message: 'Producto eliminado' })
+        ? res.redirect('/productos')
         : res.render('pages/systemMessage', { message: 'El producto que intentas eliminar no existe.', success: false, href: `productos` }); 
-        // res.status(400).json({ message: 'El producto que intentas eliminar no existe' })
     }
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `productos` });
-        // res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
     }
 }
 
 const deleteAllProducts = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         !isNaN(await businessProds.deleteAll()) 
-        ? res.redirect('/productos') // res.status(200).json({ message: 'Productos eliminados' })
-        : res.render('pages/systemMessage', { message: 'Los productos que intentas eliminar no existen', success: false, href: `productos` }) // res.status(400).json({ error: 'No se encuentran productos' })
+        ? res.redirect('/productos')
+        : res.render('pages/systemMessage', { message: 'Los productos que intentas eliminar no existen', success: false, href: `productos` })
     }
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `productos` });
-        // res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
     }
 }
 
@@ -134,6 +119,5 @@ module.exports = {
     addProduct,
     updateProduct,
     deleteProduct,
-    deleteAllProducts,
-    businessProds
+    deleteAllProducts
 }

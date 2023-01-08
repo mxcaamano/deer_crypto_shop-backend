@@ -23,7 +23,7 @@
                           </div>
                           <div class="col-md-3 col-lg-2 col-xl-3 justify-content-center">
                           <h6 class="mb-0">Precio Unitario: <%= obj.price %> U$S <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h6>
-                          <h5 class="mb-0 fs-5">Total: <%= obj.qty * obj.price %> U$S <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h5>
+                          <h5 class="mb-0 fs-5">Total: <%= (obj.qty * obj.price).toFixed(2) %> U$S <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> <img class='mb-1' width="23" height="23" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></h5>
                           </div>
                       </div>
                       </div>
@@ -38,7 +38,7 @@
                 <ul class="bg-black list-group mb-3 bordes-neon mt-4">
                   <li class="bg-black list-group-item d-flex justify-content-between">
                     <span class='fs-5'>Total (U$S) / <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdtlogo.svg" alt='tether'/> / <img class='mb-1' width="20" height="20" src="/assets/img/logos/usdclogo.svg" alt='USD Coin'/></span>
-                    <strong class='fs-5' id="total"><%= order.total %></strong>
+                    <strong class='fs-5' id="total"><%= order.total.toFixed(2) %></strong>
                   </li>
                 </ul>
               </div>

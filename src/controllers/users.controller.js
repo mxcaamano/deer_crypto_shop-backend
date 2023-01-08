@@ -14,9 +14,6 @@ const getUsers = async (req, res) => {
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `` });
     }
-    // users 
-    // ? res.json(users)
-    // : res.status(400).json({ error: 'No posee los suficientes privilegios para realizar ésta acción' });
 }
 
 const getUserById = async (req, res) => {
@@ -30,30 +27,27 @@ const getUserById = async (req, res) => {
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción.', success: false, href: `` });
     }
-    // return user 
-    // ? res.json(user) 
-    // : res.status(400).json({ error: 'No posee los suficientes privilegios para realizar ésta acción' });
 }
 
 const deleteUser = async (req, res) => {
+    logger.info(`Ruta: ${req.originalUrl}, Método: ${req.method}`);
     const user = await businessUsers.getById(req.session.passport.user);
     if(user.isAdmin){
         const id = req.params.id;
         const userDelete = await businessUsers.getById(req.params.id)
         const cartDelete = await businessCarts.getByEmail(userDelete.email)
         if(userDelete && user.id !== userDelete.id){
+            cartDelete && await businessCarts.deleteById(cartDelete.id)
             await businessUsers.deleteById(id)
-            await businessCarts.deleteById(cartDelete.id)
-            res.redirect('/usuarios') // res.status(200).json({ message: 'Producto eliminado' })
+            res.redirect('/usuarios')
         }
         else{
             res.render('pages/systemMessage', { message: 'No es posible eliminar el usuario seleccionado, compruebe el ID de usuario que desea eliminar', success: false, href: `usuarios` }); 
-            // res.status(400).json({ message: 'El producto que intentas eliminar no existe' })
         }
     }
     else{
         res.render('pages/systemMessage', { message: 'No posee los suficientes privilegios para realizar ésta acción', success: false, href: `` });
-        // res.status(403).json({ error: 'No posee privilegios para realizar esta operación' });
+
     }
 }
 

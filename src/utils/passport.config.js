@@ -1,6 +1,5 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-// const businessUsers = require('../business/businessUsers');
 const businessUsers = require('../business/businessUsers')
 const { isValidPassword } = require('./bcrypt.config');
 const logger = require('./logger');

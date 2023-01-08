@@ -23,6 +23,7 @@ const getMsgsByEmail = async (req, res) => {
     res.render('pages/userMessages', { listExist: state, list: messages });
   }
 
+// Ambas corresponden al WebSocket, una se encarga de emitir los mensajes que ya estan guardados en la DB, y la otra de guardar nuevos.
 const getMsgsWS = async (io) => {
   const chat = await businessMessages.getAll();
   chat.length ? await io.emit('getMsgs', { chat }) : await io.emit('getMsgs', {})

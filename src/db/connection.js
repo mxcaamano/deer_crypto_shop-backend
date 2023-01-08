@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const config = require('../../config')
+const {DBURL} = require('../../config')
 const logger = require('../utils/logger')
 
 const connectMongo = async () => {
     try {
-        const url = config.DBURL
+        const url = DBURL
         await mongoose.connect(url,{
             useNewUrlParser: true,
             useUnifiedTopology: true,

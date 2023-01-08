@@ -1,11 +1,11 @@
-const { ContenedorMongoDb } = require('../../containers/ContenedorMongoDb');
+const { ContainerMongoDb } = require('../../containers/ContainerMongoDb');
 const productModel = require('../../models/product.model')
-const config = require('../../../config')
+const { DBURL } = require('../../../config')
 const logger = require('../../utils/logger')
 
-class ProductosDaoMongoDb extends ContenedorMongoDb{
+class ProductsDaoMongoDb extends ContainerMongoDb{
     constructor(){
-        super(config.DBURL, productModel)
+        super(DBURL, productModel)
     }
     async getNative(id){
         try {
@@ -27,4 +27,4 @@ class ProductosDaoMongoDb extends ContenedorMongoDb{
     }
 }
 
-module.exports = ProductosDaoMongoDb
+module.exports = ProductsDaoMongoDb

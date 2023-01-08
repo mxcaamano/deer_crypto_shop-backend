@@ -29,14 +29,6 @@ function process(event) {
  .then((response) => response.json())
  .then((json) => {
     phoneInputField.value = phoneNumber
-    //  if (json.success) {
-    //     info.style.display = "";
-    //     info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
-    //  } else {
-    //  console.log(json.error);
-    //      error.style.display = "";
-    //      error.innerHTML = `Invalid phone number.`;
-    //  }
  })
  .catch((err) => {
      error.style.display = "";

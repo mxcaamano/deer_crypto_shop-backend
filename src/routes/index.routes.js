@@ -19,16 +19,15 @@ router.get('/', (req, res) => {
 });
 router.use('/carrito', authMiddleware, routerCarts);
 router.use('/chat', authMiddleware, routerMsgs);
-router.use('/login', routerLogin);
-router.use('/logout', routerLogout);
+router.use('/login',  routerLogin);
+router.use('/logout', authMiddleware, routerLogout);
 router.use('/signUp', routerSignUp);
 router.use('/perfil', authMiddleware, routerProfile);
 router.use('/ordenes', authMiddleware, routerOrders);
 router.use('/usuarios', authMiddleware, routerUsers);
-router.get("*", authMiddleware, (req, res) => {
+router.get("*", (req, res) => {
   logger.warn(`La ruta ${req.path} ${req.method} no está implementada`);
-  res.render('pages/404error')
-  // res.status(404).json({message: `La ruta ${req.method} ${req.url} no está implementada`})
+  res.render('pages/404error');
 })
 
 module.exports = router
