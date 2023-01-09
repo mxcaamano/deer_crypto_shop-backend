@@ -25,7 +25,7 @@ router.use('/signUp', routerSignUp);
 router.use('/perfil', authMiddleware, routerProfile);
 router.use('/ordenes', authMiddleware, routerOrders);
 router.use('/usuarios', authMiddleware, routerUsers);
-router.get("*", (req, res) => {
+router.use("*", (req, res) => {
   logger.warn(`La ruta ${req.path} ${req.method} no está implementada`);
   res.render('pages/404error');
 })
