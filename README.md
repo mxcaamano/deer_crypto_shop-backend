@@ -75,8 +75,8 @@ _El frontend de la API REST está preparado para recibir el body y los parametro
 |/login|POST|Envia la información de los campos email y clave, si son correctos redirecciona a /productos, de lo contrario muestra un error|
 |/login/error|GET|Muestra el mensaje de error de login|
 |/|GET|Redirecciona a /productos|
-|/productos|GET|Muestra los productos disponibles para añadir al carrito, es accesible por todos los usuarios, registrados o no, con diferente vista|
-|/productos/:id|GET|Muestra el detalle de un producto segun el id ingresado, es accesible por todos los usuarios, registrados o no, con diferente vista|
+|/productos|GET|Muestra los productos disponibles para añadir al carrito, es accesible por todos los usuarios, registrados o no, con diferente vista. Como administrador, disponemos de botones para eliminar los productos y un formulario con todos los campos necesarios para añadir otros a través del POST|
+|/productos/:id|GET|Muestra el detalle de un producto segun el id ingresado, es accesible por todos los usuarios, registrados o no, con diferente vista. Como administrador, disponemos de botones para eliminar el producto, y tambien existe un formulario que permite modificar los campos del mismo a través del PUT|
 |/productos/categorias/:category|GET|Muestra los productos segun la categoria ingresada, es accesible por todos los usuarios, registrados o no, con diferente vista|
 |/productos 🔑|POST|Añade un producto a la base de datos con sus respectivas propiedades|
 |/productos/:id 🔑|PUT|Modifica un producto de la base de datos segun su id|
