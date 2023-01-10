@@ -5,7 +5,7 @@ _Hola!_ 👋😄
 _Este repositorio consiste en la realizacion de un proyecto final para el [Curso de Programación Backend](https://www.coderhouse.com/online/programacion-backend)
 correspondiente a la [Carrera de Desarrollo FullStack](https://www.coderhouse.com/online/carrera-online-desarrollo-fullstack) de Coderhouse_
 
-_En este caso tuve como objetivo desarrollar el Backend de un e-commerce utilizando un servidor con expressJs_
+_En éste caso tuve como objetivo desarrollar el Backend de un e-commerce utilizando un servidor con expressJs_
 
 ## Construido con 🛠️
 
