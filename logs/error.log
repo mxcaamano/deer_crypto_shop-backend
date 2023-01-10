@@ -171,3 +171,5 @@
 {"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
 {"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
 {"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"asddds\"","value":"asddds","valueType":"string"}
+{"_message":"Product validation failed","errors":{"price":{"kind":"min","message":"Path `price` (0.01) is less than minimum allowed value (1).","name":"ValidatorError","path":"price","properties":{"message":"Path `price` (0.01) is less than minimum allowed value (1).","min":1,"path":"price","type":"min","value":0.01},"value":0.01}},"level":"error"}
+{"_message":"Product validation failed","errors":{"price":{"kind":"min","message":"Path `price` (0.01) is less than minimum allowed value (1).","name":"ValidatorError","path":"price","properties":{"message":"Path `price` (0.01) is less than minimum allowed value (1).","min":1,"path":"price","type":"min","value":0.01},"value":0.01}},"level":"error"}
